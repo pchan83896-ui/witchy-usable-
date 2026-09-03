@@ -36,232 +36,477 @@
             background: rgba(26, 11, 46, 0.85);
             border: 1px solid rgba(234, 179, 8, 0.3);
             border-radius: 2rem;
+            position: relative;
         }
+
+        /* ตกแต่ง Flatpickr ให้เข้ากับธีมร้านดูดวง */
         .flatpickr-calendar {
             background: #120521 !important;
             border: 1px solid rgba(234, 179, 8, 0.4) !important;
             border-radius: 1.5rem !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
             color: #f8fafc !important;
             font-family: 'Prompt', sans-serif !important;
+            padding: 10px !important;
         }
-        .flatpickr-day.selected {
+        .flatpickr-months .flatpickr-month {
+            background: transparent !important;
+            color: #fde047 !important;
+            fill: #fde047 !important;
+        }
+        .flatpickr-current-month .flatpickr-monthDropdown-months,
+        .flatpickr-current-month input.cur-year {
+            color: #fde047 !important;
+            font-weight: 600;
+        }
+        .flatpickr-weekdays {
+            background: transparent !important;
+        }
+        span.flatpickr-weekday {
+            color: #ca8a04 !important;
+            font-weight: 600;
+        }
+        .flatpickr-day {
+            color: #e2e8f0 !important;
+            border-radius: 0.75rem !important;
+            border: 1px solid transparent;
+        }
+        .flatpickr-day.today {
+            border-color: #eab308 !important;
+            background: transparent !important;
+            color: #fde047 !important;
+        }
+        .flatpickr-day.selected, .flatpickr-day.selected:hover {
             background: linear-gradient(to right, #ca8a04, #eab308) !important;
             color: #1a0b2e !important;
             font-weight: bold;
+            border: none !important;
+        }
+        .flatpickr-day:hover {
+            background: rgba(234, 179, 8, 0.2) !important;
+        }
+        .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover {
+            color: #475569 !important;
+            background: transparent !important;
+            border: none !important;
+        }
+        .flatpickr-arrow svg {
+            fill: #fde047 !important;
         }
     </style>
 </head>
 <body class="theme-bg text-slate-100 min-h-screen">
 
-    <nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
+<nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            
             <a href="index.html" class="flex items-center space-x-2">
-                <span class="text-xl font-bold gold-gradient-text tracking-wider">Witchyu</span>
-            </a>
-            <div class="flex items-center space-x-3">
-                <a href="admin.html" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/30 text-sm font-medium">หลังบ้าน (Admin)</a>
+    <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-yellow-500/50 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]">
+    <span class="text-xl font-bold gold-gradient-text tracking-wider">Witchyu</span>
+</a>
+
+
+
+            <div class="hidden md:flex items-center space-x-3">
+                <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm shadow-md transition">จองคิวดูดวง</a>
+                <a href="lindex.html" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/30 hover:bg-slate-800 text-sm font-medium transition">ประตูแห่งโชคชะตา</a>
             </div>
+
+            <div class="md:hidden flex items-center space-x-2">
+                <a href="https://www.instagram.com/witchyu_2006?igsi=MTY1dzFwYTZxcHg2Ng== target="_blank" class="p-2 rounded-xl bg-slate-900/80 border border-yellow-600/30 text-yellow-400 hover:bg-slate-800 transition flex items-center justify-center shadow-md" title="Instagram">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <button onclick="toggleMobileMenu()" id="menu-btn" class="text-yellow-400 focus:outline-none p-2 rounded-xl bg-slate-900/80 border border-yellow-600/30">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#120521] border-b border-yellow-600/30 px-4 py-4 space-y-2 shadow-2xl">
+            <a href="index.html" class="block w-full text-center px-4 py-2.5 rounded-xl gold-button text-sm shadow-md transition">จองคิวดูดวง</a>
+            <a href="lindex.html" class="block w-full text-center px-4 py-2.5 rounded-xl bg-slate-950 text-yellow-300 border border-yellow-600/30 text-sm font-medium transition">ประตูแห่งโชคชะตา</a>
+      
+      
         </div>
     </nav>
 
+
     <main class="max-w-4xl mx-auto px-4 py-10">
-        <div class="text-center space-y-3 mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold tracking-wide gold-gradient-text">จองคิวดูดวงพยากรณ์</h1>
-        </div>
+        <section class="space-y-8">
+            <div class="text-center space-y-3">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-wide gold-gradient-text">จองคิวดูดวง</h1>
+               </p>
+            </div>
+            
+            <!-- วิธีการจองคิว -->
+              <div class="mt-4 p-4 max-w-lg mx-auto bg-[#120521]/70 border border-yellow-600/30 rounded-2xl text-center text-xs md:text-sm text-slate-300 space-y-2 shadow-lg">
+<div class="font-bold text-amber-200 mb-1">📜 ขั้นตอนการจองคิวพยากรณ์</div>
+<p>1. <strong>กรอกข้อมูลส่วนตัว</strong></p>
+<p>2. <strong>เลือกเซตคำถามและราคาที่ต้องการ</strong></p>
+<p>3. <strong>เลือกวันเวลาที่ต้องการ</strong> <span class="text-green-500 font-s">(ว่าง)</span></p>
+<p>4. <strong>ยืนยันการจองและชำระเงิน</strong></p>
+</div>
+</div>
 
-        <div id="shop-closed-banner" class="hidden bg-red-950/80 border border-red-500/50 text-red-200 p-8 rounded-2xl text-center space-y-3 shadow-xl">
-            <div class="text-3xl">🚫</div>
-            <h2 class="text-2xl font-bold">ขณะนี้ร้านปิดรับคิวชั่วคราว</h2>
-            <p class="text-sm text-red-300">ขออภัยในความไม่สะดวก แม่หมอยังไม่เปิดรับจองคิวในขณะนี้</p>
-        </div>
-
-        <div id="booking-form-container" class="mystic-card p-6 md:p-8 space-y-6 shadow-2xl">
-            <div class="space-y-4">
-                <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">ข้อมูลผู้จอง</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input type="text" id="client-name" placeholder="ชื่อเล่น-นามแฝง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-                    <input type="number" id="client-age" placeholder="อายุ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-                    <input type="text" id="client-status" placeholder="สถานะความสัมพันธ์ (เช่น โสด, มีแฟน)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="client-phone" placeholder="เบอร์โทรศัพท์สำหรับติดต่อ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-                    <input type="text" id="client-ig" placeholder="Instagram หรือ ID Line" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-                </div>
+            <div id="shop-closed-banner" class="hidden bg-red-950/80 border border-red-500/50 text-red-200 p-6 rounded-2xl text-center space-y-2 shadow-xl">
+                <div class="text-2xl">🚫</div>
+                <h2 class="text-xl font-bold">ขณะนี้ร้านปิดรับคิวชั่วคราว</h2>
+                <p class="text-sm text-red-300">ขออภัยในความไม่สะดวก แม่หมอยังไม่เปิดรับจองคิวในขณะนี้</p>
             </div>
 
-            <div class="space-y-4">
-                <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">เลือกแพ็กเกจคำถาม</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
-                        <h3 class="font-bold text-sm gold-text">คำถามเจาะจง</h3>
-                        <label class="flex items-center justify-between p-2 rounded hover:bg-yellow-950/20 cursor-pointer text-xs">
-                            <span>• 1 คำถาม (29 บาท)</span>
-                            <input type="radio" name="horo_package" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500">
-                        </label>
-                        <label class="flex items-center justify-between p-2 rounded hover:bg-yellow-950/20 cursor-pointer text-xs">
-                            <span>• 3 คำถาม (79 บาท)</span>
-                            <input type="radio" name="horo_package" value="คำถามเจาะจง: 3 คำถาม (79บ.)" class="accent-yellow-500">
-                        </label>
-                        <label class="flex items-center justify-between p-2 rounded hover:bg-yellow-950/20 cursor-pointer text-xs">
-                            <span>• 5 คำถาม (129 บาท)</span>
-                            <input type="radio" name="horo_package" value="คำถามเจาะจง: 5 คำถาม (129บ.)" class="accent-yellow-500">
-                        </label>
-                    </div>
+            <div id="booking-form-container" class="mystic-card p-6 md:p-10 shadow-2xl space-y-8">
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">ข้อมูลผู้จอง</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" id="client-name" placeholder="ชื่อเล่น-นามแฝง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+                </div>
 
-                    <div id="phone-package-section" class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
-                        <h3 class="font-bold text-sm gold-text">คำถามแบบโทร</h3>
-                        <label class="flex items-center justify-between p-2 rounded hover:bg-yellow-950/20 cursor-pointer text-xs">
-                            <span>• โทร 15 นาที (99 บาท)</span>
-                            <input type="radio" name="horo_package" value="คำถามแบบโทร: 15 นาที (99บ.)" class="accent-yellow-500">
-                        </label>
-                        <label class="flex items-center justify-between p-2 rounded hover:bg-yellow-950/20 cursor-pointer text-xs">
-                            <span>• โทร 30 นาที (129 บาท)</span>
-                            <input type="radio" name="horo_package" value="คำถามแบบโทร: 30 นาที (129บ.)" class="accent-yellow-500">
-                        </label>
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2 flex items-center gap-2">
+                        <span></span>เลือกเซตคำถามและแพ็กเกจราคา
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[550px] overflow-y-auto pr-2">
+                        
+                        <!-- 1. คำถามเจาะจง -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">คำถามเจาะจง</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• 1 คำถาม</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">29 บาท</strong> <input type="radio" name="horo_master" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500" checked></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• 3 คำถาม</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="radio" name="horo_master" value="คำถามเจาะจง: 3 คำถาม (79บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• 6 คำถาม</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">169 บาท</strong> <input type="radio" name="horo_master" value="คำถามเจาะจง: 6 คำถาม (169บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• 10 คำถาม</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">199 บาท</strong> <input type="radio" name="horo_master" value="คำถามเจาะจง: 10 คำถาม (199บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 2. คำถามแบบโทร -->
+                        <div id="phone-package-section" class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">คำถามแบบโทร (ไม่จำกัดคำถาม)</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• โทร 15 นาที</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">99 บาท</strong> <input type="radio" name="horo_master" value="คำถามแบบโทร: 15 นาที (99บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• โทร 30 นาที</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master" value="คำถามแบบโทร: 30 นาที (129บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• โทร 1 ชั่วโมง</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">239 บาท</strong> <input type="radio" name="horo_master" value="คำถามแบบโทร: 1 ชั่วโมง (239บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• โทรไม่จำกัดชั่วโมง/คำถาม</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="radio" name="horo_master" value="คำถามแบบโทร: ไม่จำกัด (299บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 3. คำถามเจาะจงเป็นเรื่องๆ -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">คำถามเจาะจงเป็นเรื่องๆ</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• สุขภาพ</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master" value="เรื่องๆ: สุขภาพ (129บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• การเงิน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">149 บาท</strong> <input type="radio" name="horo_master" value="เรื่องๆ: การเงิน (149บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• การงาน / การเรียน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">179 บาท</strong> <input type="radio" name="horo_master" value="เรื่องๆ: การงาน/การเรียน (179บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• พัฒนาตัวเอง</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">219 บาท</strong> <input type="radio" name="horo_master" value="เรื่องๆ: พัฒนาตัวเอง (219บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• ดวงรายปี</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="radio" name="horo_master" value="เรื่องๆ: ดวงรายปี (299บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 4. คำถามแบบทางเลือก 2 ทาง -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">คำถามทางเลือก 2 ทาง</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• จะเลือกห้องเรียนแบบไหน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="radio" name="horo_master" value="ทางเลือก: เลือกห้องเรียน (59บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• เข้ามหาลัยไหนดี</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">69 บาท</strong> <input type="radio" name="horo_master" value="ทางเลือก: เข้ามหาลัยไหนดี (69บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• เลือกเข้าคณะไหนดี</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="radio" name="horo_master" value="ทางเลือก: เลือกเข้าคณะไหนดี (79บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• อื่นๆ (เช่น ระหว่าง A กับ B)</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="radio" name="horo_master" value="ทางเลือก: อื่นๆ (49บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 5. เซตความรัก (ชุด 1) -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">เซตความรัก (ชุด 1)</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• คนคุย / ไม่ชัดเจน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด1: คนคุย/ไม่ชัดเจน (49บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• คนใหม่ / คนเก่า</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด1: คนใหม่/คนเก่า (59บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 6. เซตความรัก (ชุด 2) -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">เซตความรัก (ชุด 2)</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• แฟนเก่า / มีแฟน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด2: แฟนเก่า/มีแฟน (49บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• คนแอบชอบ / คนโสดสนิท</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด2: แอบชอบ/คนโสด (59บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 7. เซตความรัก (ชุด 3) -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">เซตความรัก (ชุด 3)</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• อยากมูฟออน / รักตัวเอง</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด3: มูฟออน/รักตัวเอง (49บ.)" class="accent-yellow-500"></span>
+                                </label>
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• แอบชอบแต่ไม่กล้าจีบ / มีแฟนแต่มีปัญหา</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="radio" name="horo_master" value="ความรักชุด3: ไม่กล้าจีบ/มีปัญหา (59บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 8. เซตคำถามการงาน -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">เซตคำถามการงาน</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• ได้งานใหม่ / จบใหม่ / ทำงาน / เปลี่ยนงาน</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master" value="การงาน: (ทุกหัวข้อ) (129บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 9. เซตคำถามการเรียน -->
+                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <h3 class="font-bold text-base gold-text">เซตคำถามการเรียน</h3>
+                            <div class="space-y-1.5 text-xs text-slate-300">
+                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                    <span>• ที่เรียนใหม่ / หมดไฟ / เด็กซิ่ว</span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master" value="การเรียน: (ทุกหัวข้อ) (129บ.)" class="accent-yellow-500"></span>
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
 
-            <div class="space-y-4">
-                <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">เลือกวันและเวลา</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-[#120521] border border-yellow-600/40 rounded-xl p-4">
-                        <label class="block text-xs text-yellow-400 mb-1">วันที่จอง</label>
-                        <input type="text" id="book-date" placeholder="เลือกวันที่" class="w-full bg-[#1a0b2e] border border-yellow-600/40 rounded-lg px-3 py-2 text-white text-sm">
-                        <p id="date-warning" class="text-xs text-red-400 hidden mt-1">⚠️ วันนี้ร้านปิดรับจอง</p>
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">เลือกวันและเวลา</h2>
+                    <div class="space-y-4">
+                        <div class="bg-[#120521] border border-yellow-600/40 rounded-2xl p-4">
+                            <label class="block text-xs text-yellow-400 mb-1">วันที่</label>
+                            <input type="text" id="book-date" placeholder="เลือกวันที่จอง" class="w-full bg-[#1a0b2e] border border-yellow-600/40 rounded-xl px-4 py-3 text-white text-sm">
+                            <p id="date-warning" class="text-xs text-red-400 hidden mt-1"> วันนี้ร้านปิดรับจอง</p>
+                        </div>
+                        <div class="bg-[#120521] border border-yellow-600/40 rounded-2xl p-4">
+                            <label class="block text-xs text-yellow-400 mb-1">เวลา</label>
+                            <select id="book-time" class="w-full bg-[#1a0b2e] border border-yellow-600/40 rounded-xl px-4 py-3 text-white text-sm"></select>
+                        </div>
                     </div>
-                    <div class="bg-[#120521] border border-yellow-600/40 rounded-xl p-4">
-                        <label class="block text-xs text-yellow-400 mb-1">รอบเวลา</label>
-                        <select id="book-time" class="w-full bg-[#1a0b2e] border border-yellow-600/40 rounded-lg px-3 py-2 text-white text-sm"></select>
-                    </div>
+                    <input type="text" id="client-note" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                 </div>
-                <input type="text" id="client-note" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white text-sm">
-            </div>
 
-            <button onclick="submitBooking()" class="w-full py-4 gold-button rounded-xl uppercase shadow-lg text-sm tracking-wider">ยืนยันการจองคิว</button>
-        </div>
+                <button id="submit-btn" onclick="submitBooking()" class="w-full py-4 gold-button rounded-xl uppercase shadow-lg">ยืนยันการจองคิว </button>
+            </div>
+        </section>
     </main>
 
-    <script>
-        const SUPABASE_URL = 'https://xmlvisoddzhhfvncntgv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbHZpc29kZHpoaGZ2bmNudGd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzODI0NTksImV4cCI6MjEwMzk1ODQ1OX0.cTnihQOyfrsddsrBm5ehmFF1tEK49YoOvGZHqxu2QjE';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+<script>
+    const SUPABASE_URL = 'https://xmlvisoddzhhfvncntgv.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbHZpc29kZHpoaGZ2bmNudGd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzODI0NTksImV4cCI6MjEwMzk1ODQ1OX0.cTnihQOyfrsddsrBm5ehmFF1tEK49YoOvGZHqxu2QjE';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let settings = {};
-        let bookings = [];
+    let bookings = [];
+    let settings = {};
+    let datePicker;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            flatpickr("#book-date", {
-                locale: "th",
-                dateFormat: "Y-m-d",
-                defaultDate: "today",
-                minDate: "today",
-                onChange: () => updateAvailableTimes()
-            });
-            fetchData();
+    window.addEventListener('DOMContentLoaded', () => {
+        datePicker = flatpickr("#book-date", {
+            locale: "th",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            minDate: "today",
+            maxDate: new Date().fp_incr(7),
+            onChange: function(selectedDates, dateStr, instance) {
+                updateAvailableTimes();
+            }
         });
+        
+        fetchData();
+    });
 
-        async function fetchData() {
-            const { data: settingsData } = await supabaseClient.from('settings').select('*').eq('id', 1).single();
-            const { data: bookingsData } = await supabaseClient.from('bookings').select('*');
-            settings = settingsData || { is_shop_open: true, is_phone_allowed: true };
-            bookings = bookingsData || [];
-            updateUI();
+    async function fetchData() {
+        const { data: settingsData } = await supabaseClient.from('settings').select('*').eq('id', 1).single();
+        const { data: bookingsData } = await supabaseClient.from('bookings').select('*');
+        settings = settingsData || {};
+        bookings = bookingsData || [];
+        updateUI();
+    }
+
+    function updateUI() {
+        const formContainer = document.getElementById('booking-form-container');
+        const closedBanner = document.getElementById('shop-closed-banner');
+        if (settings.is_shop_open) {
+            formContainer.classList.remove('hidden');
+            closedBanner.classList.add('hidden');
+        } else {
+            formContainer.classList.add('hidden');
+            closedBanner.classList.remove('hidden');
+        }
+        document.getElementById('phone-package-section').style.display = settings.is_phone_allowed ? "block" : "none";
+        updateAvailableTimes();
+    }
+
+    function updateAvailableTimes() {
+        const selectedDate = document.getElementById('book-date').value;
+        const timeSelect = document.getElementById('book-time');
+        const warningText = document.getElementById('date-warning');
+        
+        if (!selectedDate) return;
+
+        timeSelect.innerHTML = '';
+
+        const disabledDates = settings.disabled_dates || [];
+        if (disabledDates.includes(selectedDate)) {
+            warningText.classList.remove('hidden');
+            timeSelect.innerHTML = '<option disabled>🚫 วันนี้ร้านปิดรับคิว</option>';
+            return;
+        } else {
+            warningText.classList.add('hidden');
         }
 
-        function updateUI() {
-            const formContainer = document.getElementById('booking-form-container');
-            const closedBanner = document.getElementById('shop-closed-banner');
-            if (settings.is_shop_open) {
-                formContainer.classList.remove('hidden');
-                closedBanner.classList.add('hidden');
+        const timeSlots = settings.time_slots_config || [];
+        const openSlots = timeSlots.filter(s => s.isOpen !== false);
+
+        if (openSlots.length === 0) {
+            timeSelect.innerHTML = '<option disabled>ไม่มีรอบเวลาเปิดให้บริการ</option>';
+            return;
+        }
+
+        openSlots.forEach(slotObj => {
+            const slot = slotObj.time;
+            const isBooked = bookings.some(b => b.booking_date === selectedDate && b.booking_time === slot);
+            
+            const option = document.createElement('option');
+            option.value = slot;
+            if (isBooked) {
+                option.textContent = `${slot} (ถูกจองแล้ว)`;
+                option.disabled = true;
+                option.style.color = '#ef4444';
             } else {
-                formContainer.classList.add('hidden');
-                closedBanner.classList.remove('hidden');
+                option.textContent = `${slot} (ว่าง)`;
             }
-            document.getElementById('phone-package-section').style.display = settings.is_phone_allowed ? "block" : "none";
-            updateAvailableTimes();
+            timeSelect.appendChild(option);
+        });
+    }
+
+    async function submitBooking() {
+        const masterEl = document.querySelector('input[name="horo_master"]:checked');
+        const date = document.getElementById('book-date').value;
+        const time = document.getElementById('book-time').value;
+        const name = document.getElementById('client-name').value.trim();
+        const phone = document.getElementById('client-phone').value.trim();
+        const ig = document.getElementById('client-ig').value.trim();
+        const note = document.getElementById('client-note').value.trim() || '-';
+
+        if (!masterEl || !date || !time || !name || !phone || !ig) {
+            alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            return;
         }
 
-        function updateAvailableTimes() {
-            const selectedDate = document.getElementById('book-date').value;
-            const timeSelect = document.getElementById('book-time');
-            const warningText = document.getElementById('date-warning');
-            if (!selectedDate) return;
-
-            timeSelect.innerHTML = '';
-            const disabledDates = settings.disabled_dates || [];
-            if (disabledDates.includes(selectedDate)) {
-                warningText.classList.remove('hidden');
-                timeSelect.innerHTML = '<option disabled>🚫 วันนี้ร้านปิดรับคิว</option>';
-                return;
-            } else {
-                warningText.classList.add('hidden');
-            }
-
-            const timeSlots = settings.time_slots_config || [];
-            const openSlots = timeSlots.filter(s => s.isOpen !== false);
-
-            if (openSlots.length === 0) {
-                timeSelect.innerHTML = '<option disabled>ไม่มีรอบเวลาเปิดให้บริการ</option>';
-                return;
-            }
-
-            openSlots.forEach(slotObj => {
-                const slot = slotObj.time;
-                const isBooked = bookings.some(b => b.booking_date === selectedDate && b.booking_time === slot);
-                const option = document.createElement('option');
-                option.value = slot;
-                if (isBooked) {
-                    option.textContent = `${slot} (ถูกจองแล้ว)`;
-                    option.disabled = true;
-                    option.style.color = '#ef4444';
-                } else {
-                    option.textContent = `${slot} (ว่าง)`;
-                }
-                timeSelect.appendChild(option);
-            });
+        const { data: latestBookings } = await supabaseClient.from('bookings').select('*');
+        const isBooked = (latestBookings || []).some(b => b.booking_date === date && b.booking_time === time);
+        if (isBooked) {
+            alert('⚠️ รอบเวลานี้ในวันที่เลือกมีผู้จองตัดหน้าไปแล้ว กรุณาเลือกเวลาอื่นครับ');
+            fetchData();
+            return;
         }
 
-        async function submitBooking() {
-            const selectedPackage = document.querySelector('input[name="horo_package"]:checked');
-            const date = document.getElementById('book-date').value;
-            const time = document.getElementById('book-time').value;
-            const name = document.getElementById('client-name').value.trim();
-            const age = document.getElementById('client-age').value.trim();
-            const status = document.getElementById('client-status').value.trim();
-            const phone = document.getElementById('client-phone').value.trim();
-            const ig = document.getElementById('client-ig').value.trim();
-            const note = document.getElementById('client-note').value.trim() || '-';
+        const queueNo = "Q" + String((latestBookings || []).length + 1).padStart(3, '0');
 
-            if (!selectedPackage || !date || !time || !name || !age || !status || !phone || !ig) {
-                alert('กรุณากรอกข้อมูลส่วนตัวและเลือกแพ็กเกจให้ครบถ้วนครับ');
-                return;
-            }
+        const { error } = await supabaseClient.from('bookings').insert([{
+            queue_no: queueNo,
+            master: masterEl.value,
+            booking_date: date,
+            booking_time: time,
+            client_name: name,
+            client_phone: phone,
+            client_ig: ig,
+            note: note
+        }]);
 
-            const queueNo = "Q" + String(bookings.length + 1).padStart(3, '0');
-
-            const { error } = await supabaseClient.from('bookings').insert([{
-                queue_no: queueNo,
-                master: selectedPackage.value,
-                booking_date: date,
-                booking_time: time,
-                client_name: name,
-                client_age: age,
-                client_status: status,
-                client_phone: phone,
-                client_ig: ig,
-                note: note
-            }]);
-
-            if (error) {
-                alert('เกิดข้อผิดพลาดในการจอง กรุณาลองใหม่อีกครั้ง');
-                return;
-            }
-
-            alert('จองคิวสำเร็จ! หมายเลขคิวของคุณคือ ' + queueNo);
-            window.location.reload();
+        if (error) {
+            alert('เกิดข้อผิดพลาดในการจอง');
+            return;
         }
-    </script>
+
+        const queryParams = new URLSearchParams({
+            queue: queueNo,
+            master: masterEl.value,
+            date: date,
+            time: time,
+            name: name,
+            phone: phone,
+            ig: ig,
+            note: note
+        });
+        window.location.href = `success.html?${queryParams.toString()}`;
+    }
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>
+
 </body>
 </html>
