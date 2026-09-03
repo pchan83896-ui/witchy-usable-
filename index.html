@@ -165,6 +165,21 @@
                 </div>
 
                 <div class="space-y-4">
+    <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">ข้อมูลผู้จอง</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input type="text" id="client-name" placeholder="ชื่อเล่น-นามแฝง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+        <input type="number" id="client-age" placeholder="อายุ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+        <input type="text" id="client-status" placeholder="สถานะความสัมพันธ์ (เช่น โสด, มีแฟน)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+    </div>
+    <!-- เพิ่ม 2 ช่องนี้เข้าไปด้านล่าง เพื่อให้สอดคล้องกับระบบหลังบ้านและตอนบันทึกข้อมูล -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <input type="text" id="client-phone" placeholder="เบอร์โทรศัพท์สำหรับติดต่อ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+        <input type="text" id="client-ig" placeholder="Instagram หรือ ID Line" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+    </div>
+</div>
+
+
+                <div class="space-y-4">
                     <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2 flex items-center justify-between">
                         <span>เลือกเซตคำถามและแพ็กเกจราคา</span>
                         <button type="button" id="multi-select-toggle-btn" data-active="false" onclick="toggleMultiSelectMode()" class="px-3 py-1.5 rounded-xl bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-xs shadow transition">
