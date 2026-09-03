@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หลังบ้านหมอดู - ร้าน Witch yu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+        .theme-bg {
+            background-color: #1a0b2e;
+            background-image: radial-gradient(circle at 50% 20%, #2e1046 0%, #1a0b2e 70%, #0d041a 100%);
+        }
+        .gold-text { color: #fde047; }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #fef08a, #fde047, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-button {
+            background: linear-gradient(to right, #ca8a04, #eab308, #ca8a04);
+            color: #1a0b2e;
+            font-weight: 700;
+        }
+        .mystic-card {
+            background: rgba(26, 11, 46, 0.85);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 2rem;
+        }
+    </style>
+</head>
+<body class="theme-bg text-slate-100 min-h-screen">
+
+    <nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <span class="text-xl font-bold gold-gradient-text">ระบบหลังบ้าน (Admin)</span>
+            <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">กลับไปหน้าจองคิว 🌙</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-10 space-y-6">
+        <section class="bg-[#120521] p-6 rounded-2xl border border-yellow-600/30 space-y-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-xl font-bold gold-text">จัดการคิวและตั้งค่าระบบ</h1>
+                    <p class="text-slate-400 text-sm">ควบคุมผ่าน Supabase แบบ Real-time</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="shop-status-btn" onclick="toggleShopStatus()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
+                    <button onclick="clearBookings()" class="px-4 py-2.5 bg-red-950/40 text-red-400 border border-red-600/40 rounded-xl text-sm">ล้างคิวทั้งหมด</button>
+                </div>
+            </div>
+
+            <hr class="border-yellow-600/20">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold gold-text mb-2">📞 คำถามแบบโทร</label>
+                    <button id="phone-toggle-btn" onclick="togglePhoneService()" class="px-4 py-2 rounded-xl font-bold text-xs shadow"></button>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold gold-text mb-2">➕ เพิ่มรอบเวลาใหม่</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="new-slot-input" placeholder="เช่น 12:00 - 12:30 น." class="w-full bg-[#1a0b2e] border border-yellow-600/30 rounded-xl px-3 py-2 text-xs text-white">
+                        <button onclick="addTimeSlot()" class="px-4 py-2 gold-button rounded-xl text-xs">เพิ่ม</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold gold-text mb-2">⏰ จัดการช่วงเวลาเปิด/ปิด</label>
+                <div id="slots-config-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+            </div>
+
+            <div class="pt-4 border-t border-yellow-600/20 space-y-2">
+                <label class="block text-sm font-semibold gold-text">📅 ปิดรับจองรายวัน (เลือกเพิ่มได้หลายวัน)</label>
+                <div class="flex gap-2">
+                    <input type="date" id="block-date-input" class="bg-[#1a0b2e] border border-yellow-600/30 rounded-xl px-3 py-2 text-xs text-white">
+                    <button onclick="addDisabledDate()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition">เพิ่มวันหยุดนี้</button>
+                </div>
+                <div id="disabled-dates-container" class="flex flex-wrap gap-2 pt-2"></div>
+            </div>
+        </section>
+
+        <section class="mystic-card overflow-hidden shadow-2xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-yellow-950/20 gold-text text-sm border-b border-yellow-600/30">
+                            <th class="p-4">เลขคิว</th>
+                            <th class="p-4">วัน-เวลา</th>
+                            <th class="p-4">แพ็กเกจ</th>
+                            <th class="p-4">ชื่อลูกค้า</th>
+                            <th class="p-4">เบอร์ / IG</th>
+                            <th class="p-4">หมายเหตุ</th>
+                            <th class="p-4 text-center">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booking-list" class="divide-y divide-yellow-600/20 text-sm"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const SUPABASE_URL = 'https://xmlvisoddzhhfvncntgv.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbHZpc29kZHpoaGZ2bmNudGd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzODI0NTksImV4cCI6MjEwMzk1ODQ1OX0.cTnihQOyfrsddsrBm5ehmFF1tEK49YoOvGZHqxu2QjE';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let settings = {};
+        let bookings = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchAdminData();
+            supabaseClient.channel('admin-changes')
+                .on('postgres_changes', { event: '*', schema: 'public' }, () => { fetchAdminData(); })
+                .subscribe();
+        });
+
+        async function fetchAdminData() {
+            const { data: settingsData } = await supabaseClient.from('settings').select('*').eq('id', 1).single();
+            const { data: bookingsData } = await supabaseClient.from('bookings').select('*').order('id', { ascending: true });
+            settings = settingsData || {};
+            bookings = bookingsData || [];
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            const shopBtn = document.getElementById('shop-status-btn');
+            if (settings.is_shop_open) {
+                shopBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white";
+                shopBtn.innerHTML = "🟢 ร้านเปิดอยู่ (คลิกปิด)";
+            } else {
+                shopBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white";
+                shopBtn.innerHTML = "🔴 ร้านปิดอยู่ (คลิกเปิด)";
+            }
+
+            const phoneBtn = document.getElementById('phone-toggle-btn');
+            if (settings.is_phone_allowed) {
+                phoneBtn.className = "px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs";
+                phoneBtn.innerHTML = "✅ เปิดคำถามโทรอยู่ (คลิกปิด)";
+            } else {
+                phoneBtn.className = "px-4 py-2 bg-red-600 text-white rounded-xl text-xs";
+                phoneBtn.innerHTML = "❌ ปิดคำถามโทรอยู่ (คลิกเปิด)";
+            }
+
+            renderSlotsConfig();
+            renderDisabledDates();
+            renderTable();
+        }
+
+        async function toggleShopStatus() {
+            await supabaseClient.from('settings').update({ is_shop_open: !settings.is_shop_open }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        async function togglePhoneService() {
+            await supabaseClient.from('settings').update({ is_phone_allowed: !settings.is_phone_allowed }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        async function toggleSlot(index) {
+            let slots = settings.time_slots_config || [];
+            slots[index].isOpen = !slots[index].isOpen;
+            await supabaseClient.from('settings').update({ time_slots_config: slots }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        async function deleteSlot(index) {
+            let slots = settings.time_slots_config || [];
+            slots.splice(index, 1);
+            await supabaseClient.from('settings').update({ time_slots_config: slots }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        async function addTimeSlot() {
+            const input = document.getElementById('new-slot-input');
+            if (!input.value.trim()) return;
+            let slots = settings.time_slots_config || [];
+            slots.push({ time: input.value.trim(), isOpen: true });
+            input.value = '';
+            await supabaseClient.from('settings').update({ time_slots_config: slots }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        async function addDisabledDate() {
+            const dateVal = document.getElementById('block-date-input').value;
+            if (!dateVal) {
+                alert('กรุณาเลือกวันที่ต้องการปิดรับจองก่อนครับ');
+                return;
+            }
+            let disabled = settings.disabled_dates || [];
+            if (!disabled.includes(dateVal)) {
+                disabled.push(dateVal);
+                await supabaseClient.from('settings').update({ disabled_dates: disabled }).eq('id', 1);
+                fetchAdminData();
+            } else {
+                alert('วันนี้ถูกบันทึกเป็นวันหยุดไปแล้วครับ');
+            }
+            document.getElementById('block-date-input').value = '';
+        }
+
+        async function removeDisabledDate(dateStr) {
+            let disabled = settings.disabled_dates || [];
+            disabled = disabled.filter(d => d !== dateStr);
+            await supabaseClient.from('settings').update({ disabled_dates: disabled }).eq('id', 1);
+            fetchAdminData();
+        }
+
+        function renderSlotsConfig() {
+            const container = document.getElementById('slots-config-container');
+            container.innerHTML = '';
+            (settings.time_slots_config || []).forEach((slot, index) => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-[#1a0b2e] border border-yellow-600/30 rounded-xl text-xs">
+                        <span>${slot.time}</span>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSlot(${index})" class="px-2 py-1 rounded ${slot.isOpen !== false ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">${slot.isOpen !== false ? 'เปิด' : 'ปิด'}</button>
+                            <button onclick="deleteSlot(${index})" class="px-2 py-1 bg-red-950 text-red-400 rounded">ลบ</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderDisabledDates() {
+            const container = document.getElementById('disabled-dates-container');
+            container.innerHTML = '';
+            const disabled = settings.disabled_dates || [];
+            if (disabled.length === 0) {
+                container.innerHTML = '<span class="text-xs text-slate-400">ยังไม่มีวันหยุดที่ถูกบล็อก</span>';
+                return;
+            }
+            disabled.forEach(d => {
+                container.innerHTML += `
+                    <div class="flex items-center gap-2 bg-red-950 border border-red-600/40 px-3 py-1 rounded-xl text-xs text-red-200">
+                        <span>🚫 ${d}</span>
+                        <button onclick="removeDisabledDate('${d}')" class="font-bold text-white hover:text-red-400">×</button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('booking-list');
+            tbody.innerHTML = '';
+            if (bookings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
+                return;
+            }
+            bookings.forEach(b => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-yellow-950/10">
+                        <td class="p-4 font-bold text-yellow-400">${b.queue_no}</td>
+                        <td class="p-4">${b.booking_date}<br><span class="text-xs text-yellow-300">${b.booking_time}</span></td>
+                        <td class="p-4">${b.master}</td>
+                        <td class="p-4">${b.client_name}</td>
+                        <td class="p-4">${b.client_phone}<br><span class="text-xs text-yellow-400">${b.client_ig}</span></td>
+                        <td class="p-4 text-slate-400">${b.note}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="deleteBooking(${b.id})" class="px-3 py-1 bg-red-950 text-red-400 border border-red-600/40 rounded-lg text-xs">ลบ</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteBooking(id) {
+            if (confirm('คุณต้องการลบคิวนี้ใช่หรือไม่?')) {
+                await supabaseClient.from('bookings').delete().eq('id', id);
+                fetchAdminData();
+            }
+        }
+
+        async function clearBookings() {
+            if (confirm('คุณต้องการล้างข้อมูลคิวทั้งหมดใช่หรือไม่?')) {
+                await supabaseClient.from('bookings').delete().neq('id', 0);
+                fetchAdminData();
+            }
+        }
+    </script>
+</body>
+</html>
