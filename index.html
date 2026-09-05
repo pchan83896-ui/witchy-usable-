@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ร้าน Witch yu - จองคิวดูดวงพยากรณ์</title>
+    <title>Witchyu - จองคิวดูดวง</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script>
@@ -193,7 +193,7 @@
             
             <!-- วิธีการจองคิว -->
     <div class="mt-4 p-4 w-full bg-[#120521]/70 border border-yellow-600/30 rounded-2xl text-xs md:text-sm text-slate-300 shadow-lg space-y-2">
-    <div class="font-bold text-amber-200 text-center mb-2">📜 ขั้นตอนการจองคิวพยากรณ์</div>
+    <div class="font-bold text-amber-200 text-center mb-2">ขั้นตอนการจองคิวดูดวง</div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 px-2">
     <div class="space-y-2">
             <p>1. <strong>กรอกข้อมูลส่วนตัว</strong></p>
@@ -208,7 +208,7 @@
 
 
             <div id="shop-closed-banner" class="hidden bg-red-950/80 border border-red-500/50 text-red-200 p-6 rounded-2xl text-center space-y-2 shadow-xl">
-                <div class="text-2xl">🚫</div>
+                <div class="text-2xl"></div>
                 <h2 class="text-xl font-bold">ขณะนี้ร้านปิดรับคิวชั่วคราว</h2>
                 <p class="text-sm text-red-300">ขออภัยในความไม่สะดวก แม่หมอยังไม่เปิดรับจองคิวในขณะนี้</p>
             </div>
@@ -217,9 +217,9 @@
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2">ข้อมูลผู้จอง</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" id="client-name" placeholder="ชื่อเล่น-นามแฝง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+                        <input type="text" id="client-name" placeholder="ชื่อเล่น-ชื่อจริง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                         <input type="number" id="client-age" placeholder="อายุ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
-                        <input type="text" id="client-status" placeholder="สถานะความสัมพันธื(เช่น โสด, มีแฟน,)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
+                        <input type="text" id="client-status" placeholder="สถานะความสัมพันธ์(เช่น โสด, มีแฟน,)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                 </div>
 
                 <div class="space-y-4">
@@ -234,7 +234,7 @@
                         <!-- 1. คำถามเจาะจง -->
                         <div id="box-tarot-single" class="relative border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
                             <div class="multi-lock-overlay hidden absolute inset-0 z-10 flex items-center justify-center text-center px-4 rounded-xl bg-[#0d041a]/85 backdrop-blur-[1px]">
-                                <span class="text-xs font-semibold text-yellow-300">🚫 ไม่สามารถจองหลายรายการได้<br>ในโหมดเลือกหลายรายการ</span>
+                                <span class="text-xs font-semibold text-yellow-300">ไม่สามารถจองหลายรายการได้<br>ในโหมดเลือกหลายรายการ</span>
                             </div>
                             <h3 class="font-bold text-base gold-text">คำถามเจาะจง</h3>
                             <div class="space-y-1.5 text-xs text-slate-300">
