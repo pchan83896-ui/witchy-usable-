@@ -94,6 +94,44 @@
         .flatpickr-arrow svg {
             fill: #fde047 !important;
         }
+
+        /* ===== ตกแต่งธีมเวทมนตร์ อ้างอิงจากภาพพระจันทร์-ดวงดาวสีทองบนพื้นม่วง ===== */
+        .mystic-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: rgba(234, 179, 8, 0.6);
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            margin: 0.25rem 0;
+        }
+        .mystic-divider::before, .mystic-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(234, 179, 8, 0.5), transparent);
+        }
+        .mystic-moonphases {
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 0.5em;
+            color: rgba(253, 224, 71, 0.55);
+        }
+        .mystic-card::before {
+            content: '✦';
+            position: absolute;
+            top: 10px; left: 14px;
+            color: rgba(234, 179, 8, 0.5);
+            font-size: 0.8rem;
+        }
+        .mystic-card::after {
+            content: '✦';
+            position: absolute;
+            bottom: 10px; right: 14px;
+            color: rgba(234, 179, 8, 0.5);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body class="theme-bg text-slate-100 min-h-screen">
@@ -109,9 +147,22 @@
             <div class="hidden md:flex items-center space-x-3">
                 <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm shadow-md transition">จองคิวดูดวง</a>
                 <a href="lindex.html" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/30 hover:bg-slate-800 text-sm font-medium transition">แบบทดสอบทำนายดวง</a>
+                <div class="flex items-center gap-1.5 bg-[#1a0b2e] px-2.5 py-1.5 rounded-xl border border-yellow-600/30">
+                    <span class="text-[11px] text-yellow-300">เลือกหลายรายการ</span>
+                    <button type="button" id="multi-select-toggle-btn-desktop" data-active="false" onclick="toggleMultiSelectMode()" class="multi-select-toggle-btn px-3 py-1.5 rounded-lg bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-[11px] shadow transition">เลือก</button>
+                </div>
+                <a href="https://www.instagram.com/witchyu_2006?igsi=MTY1dzFwYTZxcHg2Ng==" target="_blank" class="p-2 rounded-xl bg-slate-900/80 border border-yellow-600/30 text-yellow-400 hover:bg-slate-800 transition flex items-center justify-center shadow-md" title="Instagram">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
             </div>
 
             <div class="md:hidden flex items-center space-x-2">
+                <div class="flex items-center gap-1 bg-[#1a0b2e] px-2 py-1.5 rounded-xl border border-yellow-600/30">
+                    <span class="text-[10px] text-yellow-300 hidden xs:inline">เลือกหลายรายการ</span>
+                    <button type="button" id="multi-select-toggle-btn" data-active="false" onclick="toggleMultiSelectMode()" class="multi-select-toggle-btn px-2.5 py-1 rounded-lg bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-[10px] shadow transition">เลือก</button>
+                </div>
                 <a href="https://www.instagram.com/witchyu_2006?igsi=MTY1dzFwYTZxcHg2Ng==" target="_blank" class="p-2 rounded-xl bg-slate-900/80 border border-yellow-600/30 text-yellow-400 hover:bg-slate-800 transition flex items-center justify-center shadow-md" title="Instagram">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -126,18 +177,21 @@
 
         </div>
 
+
         <div id="mobile-menu" class="hidden md:hidden bg-[#120521] border-b border-yellow-600/30 px-4 py-4 space-y-2 shadow-2xl">
             <a href="index.html" class="block w-full text-center px-4 py-2.5 rounded-xl gold-button text-sm shadow-md transition">จองคิวดูดวง</a>
             <a href="lindex.html" class="block w-full text-center px-4 py-2.5 rounded-xl bg-slate-950 text-yellow-300 border border-yellow-600/30 text-sm font-medium transition">แบบทดสอบทำนายดวง</a>
         </div>
     </nav>
 
-
     <main class="max-w-4xl mx-auto px-4 py-10">
         <section class="space-y-8">
-            <div class="text-center space-y-3">
+            <div class="text-center space-y-2">
                 <h1 class="text-3xl md:text-4xl font-bold tracking-wide gold-gradient-text">จองคิวดูดวง</h1>
+                <div class="mystic-divider">✦</div>
             </div>
+            
+            
             
             <!-- วิธีการจองคิว -->
             <div class="mt-4 p-4 max-w-lg mx-auto bg-[#120521]/70 border border-yellow-600/30 rounded-2xl text-center text-xs md:text-sm text-slate-300 space-y-2 shadow-lg">
@@ -161,43 +215,38 @@
                         <input type="text" id="client-name" placeholder="ชื่อเล่น-นามแฝง" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                         <input type="number" id="client-age" placeholder="อายุ" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                         <input type="text" id="client-status" placeholder="สถานะความสัมพันธื(เช่น โสด, มีแฟน,)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
-            
                 </div>
 
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2 flex items-center gap-2">
                         <span>เลือกเซตคำถามและแพ็กเกจราคา</span>
-                  <!-- ปุ่มเปิด/ปิดโหมดเลือกหลายรายการ -->
-<div class="flex justify-between items-center bg-[#1a0b2e] p-3 rounded-xl border border-yellow-600/30">
-    <span class="text-xs text-yellow-300">💡 ต้องการเลือกหลายแพ็กเกจในหมวดความรัก/การงาน/การเรียน/ทางเลือก?</span>
-    <button type="button" id="multi-select-toggle-btn" data-active="false" onclick="toggleMultiSelectMode()" class="px-4 py-2 rounded-xl bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-xs shadow transition">
-        🔲 กดเพื่อเลือกหลายรายการ
-    </button>
-</div>
-
+                        
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[550px] overflow-y-auto pr-2">
                         
                         <!-- 1. คำถามเจาะจง -->
-                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                        <div id="box-tarot-single" class="relative border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <div class="multi-lock-overlay hidden absolute inset-0 z-10 flex items-center justify-center text-center px-4 rounded-xl bg-[#0d041a]/85 backdrop-blur-[1px]">
+                                <span class="text-xs font-semibold text-yellow-300">🚫 ไม่สามารถจองหลายรายการได้<br>ในโหมดเลือกหลายรายการ</span>
+                            </div>
                             <h3 class="font-bold text-base gold-text">คำถามเจาะจง</h3>
                             <div class="space-y-1.5 text-xs text-slate-300">
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• 1 คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">29 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">29 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• 3 คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามเจาะจง: 3 คำถาม (79บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามเจาะจง: 3 คำถาม (79บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• 6 คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">169 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามเจาะจง: 6 คำถาม (169บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">169 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามเจาะจง: 6 คำถาม (169บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• 10 คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">199 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามเจาะจง: 10 คำถาม (199บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">199 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามเจาะจง: 10 คำถาม (199บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
 
                                 <!-- เพิ่มช่องพิมพ์จำนวนคำถามเองต่อท้าย -->
@@ -210,7 +259,7 @@
                                     <div class="flex justify-between items-center text-slate-400">
                                         <span>ราคารวม (<span id="custom-total-price">29</span> บาท):</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master" id="radio-custom-question" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_single" id="radio-custom-question" value="คำถามเจาะจง: 1 คำถาม (29บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกแบบระบุจำนวน</span>
                                         </label>
                                     </div>
@@ -219,51 +268,57 @@
                         </div>
 
                         <!-- 2. คำถามแบบโทร -->
-                        <div id="phone-package-section" class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                        <div id="phone-package-section" class="relative border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <div class="multi-lock-overlay hidden absolute inset-0 z-10 flex items-center justify-center text-center px-4 rounded-xl bg-[#0d041a]/85 backdrop-blur-[1px]">
+                                <span class="text-xs font-semibold text-yellow-300">🚫 ไม่สามารถจองหลายรายการได้<br>ในโหมดเลือกหลายรายการ</span>
+                            </div>
                             <h3 class="font-bold text-base gold-text">คำถามแบบโทร (ไม่จำกัดคำถาม)</h3>
                             <div class="space-y-1.5 text-xs text-slate-300">
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• โทร 15 นาที</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">99 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามแบบโทร: 15 นาที (99บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">99 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: 15 นาที (99บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• โทร 30 นาที</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามแบบโทร: 30 นาที (129บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: 30 นาที (129บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• โทร 1 ชั่วโมง</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">239 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามแบบโทร: 1 ชั่วโมง (239บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">239 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: 1 ชั่วโมง (239บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• โทรไม่จำกัดชั่วโมง/คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="radio" name="horo_master_single" value="คำถามแบบโทร: ไม่จำกัด (299บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: ไม่จำกัด (299บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                             </div>
                         </div>
 
                         <!-- 3. คำถามเจาะจงเป็นเรื่องๆ -->
-                        <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                        <div id="box-tarot-topic" class="relative border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
+                            <div class="multi-lock-overlay hidden absolute inset-0 z-10 flex items-center justify-center text-center px-4 rounded-xl bg-[#0d041a]/85 backdrop-blur-[1px]">
+                                <span class="text-xs font-semibold text-yellow-300">🚫 ไม่สามารถจองหลายรายการได้<br>ในโหมดเลือกหลายรายการ</span>
+                            </div>
                             <h3 class="font-bold text-base gold-text">คำถามเจาะจงเป็นเรื่องๆ</h3>
                             <div class="space-y-1.5 text-xs text-slate-300">
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• สุขภาพ</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="radio" name="horo_master_single" value="เรื่องๆ: สุขภาพ (129บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">129 บาท</strong> <input type="checkbox" name="horo_master_single" value="เรื่องๆ: สุขภาพ (129บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• การเงิน</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">149 บาท</strong> <input type="radio" name="horo_master_single" value="เรื่องๆ: การเงิน (149บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">149 บาท</strong> <input type="checkbox" name="horo_master_single" value="เรื่องๆ: การเงิน (149บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• การงาน / การเรียน</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">179 บาท</strong> <input type="radio" name="horo_master_single" value="เรื่องๆ: การงาน/การเรียน (179บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">179 บาท</strong> <input type="checkbox" name="horo_master_single" value="เรื่องๆ: การงาน/การเรียน (179บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• พัฒนาตัวเอง</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">219 บาท</strong> <input type="radio" name="horo_master_single" value="เรื่องๆ: พัฒนาตัวเอง (219บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">219 บาท</strong> <input type="checkbox" name="horo_master_single" value="เรื่องๆ: พัฒนาตัวเอง (219บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• ดวงรายปี</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="radio" name="horo_master_single" value="เรื่องๆ: ดวงรายปี (299บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="checkbox" name="horo_master_single" value="เรื่องๆ: ดวงรายปี (299บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                             </div>
                         </div>
@@ -271,24 +326,24 @@
                         <!-- 4. คำถามแบบทางเลือก 2 ทาง -->
                         <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-2">
                             <h3 class="font-bold text-base gold-text">คำถามทางเลือก 2 ทาง</h3>
-                            <button type="button" onclick="clearGroup('horo_master_study')" class="px-2 py-1 text-[10px] bg-red-950/60 text-red-300 border border-red-600/40 rounded-lg hover:bg-red-900 transition">ล้างค่า</button>
                             <div class="space-y-1.5 text-xs text-slate-300">
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• จะเลือกห้องเรียนแบบไหน</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="radio" name="horo_master_choice" value="ทางเลือก: เลือกห้องเรียน (59บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">59 บาท</strong> <input type="checkbox" name="horo_master_choice" value="ทางเลือก: เลือกห้องเรียน (59บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• เข้ามหาลัยไหนดี</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">69 บาท</strong> <input type="radio" name="horo_master_choice" value="ทางเลือก: เข้ามหาลัยไหนดี (69บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">69 บาท</strong> <input type="checkbox" name="horo_master_choice" value="ทางเลือก: เข้ามหาลัยไหนดี (69บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• เลือกเข้าคณะไหนดี</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="radio" name="horo_master_choice" value="ทางเลือก: เลือกเข้าคณะไหนดี (79บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">79 บาท</strong> <input type="checkbox" name="horo_master_choice" value="ทางเลือก: เลือกเข้าคณะไหนดี (79บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• อื่นๆ (เช่น ระหว่าง A กับ B)</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="radio" name="horo_master_choice" value="ทางเลือก: อื่นๆ (49บ.)" class="accent-yellow-500"></span>
+                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">49 บาท</strong> <input type="checkbox" id="choice-other-checkbox" name="horo_master_choice" value="ทางเลือก: อื่นๆ (49บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
+                                <input type="text" id="choice-other-text" placeholder="พิมพ์ทางเลือกของคุณ เช่น เลือก A หรือ B" class="hidden w-full mt-1 px-3 py-2 rounded-lg bg-[#1a0b2e] border border-yellow-600/30 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-yellow-500">
                             </div>
                         </div>
 
@@ -308,7 +363,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 ไม่ชัดเจน</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: ไม่ชัดเจน (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: ไม่ชัดเจน (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -326,7 +381,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 คนคุย</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: คนคุย (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: คนคุย (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -344,7 +399,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 แฟนเก่า</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: แฟนเก่า (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: แฟนเก่า (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -362,7 +417,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 มีแฟน</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: มีแฟน (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: มีแฟน (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -380,7 +435,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 อยากมูฟออนแต่มูฟไม่ได้</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: อยากมูฟออนแต่มูฟไม่ได้ (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: อยากมูฟออนแต่มูฟไม่ได้ (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -398,7 +453,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 รักตัวเอง</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: รักตัวเอง (49บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: รักตัวเอง (49บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (49บ.)</span>
                                         </label>
                                     </div>
@@ -417,19 +472,19 @@
                         <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-3">
                             <div class="flex justify-between items-center">
                                 <h3 class="font-bold text-base gold-text">เซตคำถามความรักราคา 59บ.</h3>
-                                <button type="button" onclick="toggleDetails('detail-all-love')" class="px-3 py-1 text-xs bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 rounded-lg transition">
+                                <button type="button" onclick="toggleDetails('detail-all-love-59')" class="px-3 py-1 text-xs bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 rounded-lg transition">
                                     ดูรายละเอียดทั้งหมด
                                 </button>
                             </div>
 
                             <!-- ส่วนแสดงรายละเอียดทั้ง 6 หัวข้อพร้อมปุ่มเลือก -->
-                            <div id="detail-all-love" class="hidden space-y-3 pt-2 border-t border-yellow-600/20 text-xs text-slate-300">
+                            <div id="detail-all-love-59" class="hidden space-y-3 pt-2 border-t border-yellow-600/20 text-xs text-slate-300">
                                 <!-- หมวด 1: คนใหม่ -->
                                 <div class="bg-[#1a0b2e]/80 border border-yellow-600/20 rounded-lg p-2.5 space-y-2">
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 คนใหม่</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: คนใหม่ (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: คนใหม่ (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -448,7 +503,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 คนเก่า</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: คนเก่า (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: คนเก่า (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -467,7 +522,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 คนแอบชอบ</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: คนแอบชอบ (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: คนแอบชอบ (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -484,7 +539,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 คนโสดสนิท</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: คนโสดสนิท (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: คนโสดสนิท (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -501,7 +556,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 มีแฟนแต่มีปัญหา</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: มีแฟนแต่มีปัญหา (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: มีแฟนแต่มีปัญหา (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -518,7 +573,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 แอบชอบแต่ไม่กล้าจีบ</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_love" value="ความรัก: แอบชอบแต่ไม่กล้าจีบ (59บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_love" value="ความรัก: แอบชอบแต่ไม่กล้าจีบ (59บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (59บ.)</span>
                                         </label>
                                     </div>
@@ -549,7 +604,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 ได้งานใหม่</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_work" value="การงาน: ได้งานใหม่ (129บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_work" value="การงาน: ได้งานใหม่ (129บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold"> (129บ.)</span>
                                         </label>
                                     </div>
@@ -567,7 +622,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 ทำงาน</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_work" value="การงาน: ทำงาน (129บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_work" value="การงาน: ทำงาน (129บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (129บ.)</span>
                                         </label>
                                     </div>
@@ -585,7 +640,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 จบใหม่</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_work" value="การงาน: จบใหม่ (129บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_work" value="การงาน: จบใหม่ (129บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (129บ.)</span>
                                         </label>
                                     </div>
@@ -603,7 +658,7 @@
                                     <div class="flex justify-between items-center">
                                         <span class="font-medium text-amber-200">📌 เปลี่ยนงาน</span>
                                         <label class="flex items-center gap-1.5 cursor-pointer">
-                                            <input type="radio" name="horo_master_work" value="การงาน: เปลี่ยนงาน (129บ.)" class="accent-yellow-500">
+                                            <input type="checkbox" name="horo_master_work" value="การงาน: เปลี่ยนงาน (129บ.)" class="accent-yellow-500 w-4 h-4 rounded">
                                             <span class="text-xs text-yellow-300 font-semibold">เลือกเซตนี้ (129บ.)</span>
                                         </label>
                                     </div>
@@ -624,8 +679,6 @@
     <div class="flex justify-between items-center">
         <h3 class="font-bold text-base gold-text">เซตคำถามการเรียน</h3>
         <div class="flex items-center gap-2">
-            <!-- ปุ่มสำหรับล้างค่า/ยกเลิกการเลือกในกลุ่มนี้ -->
-            <button type="button" onclick="clearGroup('horo_master_study')" class="px-2 py-1 text-[10px] bg-red-950/60 text-red-300 border border-red-600/40 rounded-lg hover:bg-red-900 transition">ล้างค่า</button>
             <button type="button" onclick="toggleDetails('detail-all-study')" class="px-3 py-1 text-xs bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 rounded-lg transition">
                 ดูรายละเอียดทั้งหมด
             </button>
@@ -730,6 +783,17 @@
                     <input type="text" id="client-note" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)" class="w-full bg-[#120521] border border-yellow-600/30 rounded-xl px-4 py-3 text-white">
                 </div>
 
+                <div id="total-price-box" class="hidden bg-[#120521] border border-yellow-500/50 rounded-2xl p-4 space-y-3 shadow-lg">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-yellow-300 font-semibold">📋 รายการที่เลือก</span>
+                    </div>
+                    <ul id="selected-items-list" class="space-y-1.5 text-xs text-slate-200"></ul>
+                    <div class="flex justify-between items-center pt-2 border-t border-yellow-600/20">
+                        <span class="text-sm text-yellow-300 font-semibold">💰 ราคารวมทั้งหมด</span>
+                        <span class="text-xl font-bold gold-gradient-text"><span id="total-price-value">0</span> บาท</span>
+                    </div>
+                </div>
+
                 <button id="submit-btn" onclick="submitBooking()" class="w-full py-4 gold-button rounded-xl uppercase shadow-lg">ยืนยันการจองคิว</button>
             </div>
         </section>
@@ -826,25 +890,83 @@
         });
     }
 
-    async function submitBooking() {
-        // รวบรวมค่าจากทุกกลุ่ม (รองรับทั้งแบบเลือกอันเดียวและเลือกหลายรายการ)
-        const allGroups = [
-            'horo_master_single', 
-            'horo_master_phone', 
-            'horo_master_topic', 
-            'horo_master_choice', 
-            'horo_master_love', 
-            'horo_master_work', 
-            'horo_master_study'
-        ];
+    // กลุ่ม input ทั้งหมดที่ใช้เก็บแพ็กเกจ/คำถามที่เลือก
+    const ALL_MASTER_GROUPS = [
+        'horo_master_single',
+        'horo_master_choice',
+        'horo_master_love',
+        'horo_master_work',
+        'horo_master_study'
+    ];
 
-        let selectedMasters = [];
-        allGroups.forEach(groupName => {
-            const checkedElements = document.querySelectorAll(`input[name="${groupName}"]:checked`);
-            checkedElements.forEach(el => {
-                selectedMasters.push(el.value);
+    // ดึงราคาจากข้อความ เช่น "ความรัก: คนคุย (49บ.)" -> 49
+    function extractPrice(valueText) {
+        const m = valueText.match(/\((\d+)\s*บ\.?\)/);
+        return m ? parseInt(m[1], 10) : 0;
+    }
+
+    function getSelectedMasters() {
+        let selected = [];
+        ALL_MASTER_GROUPS.forEach(groupName => {
+            document.querySelectorAll(`input[name="${groupName}"]:checked`).forEach(el => {
+                selected.push(el.value);
             });
         });
+        return selected;
+    }
+
+    function updateTotalPriceDisplay() {
+        const selected = getSelectedMasters();
+        const total = selected.reduce((sum, v) => sum + extractPrice(v), 0);
+        const box = document.getElementById('total-price-box');
+        const valueEl = document.getElementById('total-price-value');
+        const listEl = document.getElementById('selected-items-list');
+
+        if (selected.length > 0 && total > 0) {
+            box.classList.remove('hidden');
+            valueEl.textContent = total.toLocaleString('th-TH');
+            listEl.innerHTML = selected.map(item => {
+                const price = extractPrice(item);
+                const label = item.replace(/\s*\(\d+\s*บ\.?\)\s*$/, '');
+                return `<li class="flex justify-between items-center gap-2 bg-[#1a0b2e] px-3 py-1.5 rounded-lg border border-yellow-600/10">
+                            <span>• ${label}</span>
+                            <span class="text-yellow-400 font-semibold shrink-0">${price.toLocaleString('th-TH')} บาท</span>
+                        </li>`;
+            }).join('');
+        } else {
+            box.classList.add('hidden');
+            valueEl.textContent = '0';
+            listEl.innerHTML = '';
+        }
+        return total;
+    }
+
+    // ฟัง event การเปลี่ยนแปลงของ input ทุกกลุ่มแบบ delegation เพื่ออัปเดตราคารวมและบังคับเลือกเดี่ยว
+    document.addEventListener('change', function(e) {
+        const t = e.target;
+        if (!t.name || !ALL_MASTER_GROUPS.includes(t.name)) return;
+
+        if (t.type === 'checkbox' && t.checked) {
+            // กลุ่ม "horo_master_single" (เจาะจง/โทร/เรื่องๆ) ต้องเลือกได้ทีละ 1 รายการเสมอ ไม่ว่าจะเปิดโหมดเลือกหลายรายการหรือไม่
+            // กลุ่มอื่น (ความรัก/การงาน/การเรียน/ทางเลือก) จะเลือกทีละ 1 จนกว่าจะเปิดโหมดเลือกหลายรายการ
+            const forceSingle = (t.name === 'horo_master_single') || !isMultiSelectActive();
+            if (forceSingle) {
+                document.querySelectorAll(`input[type="checkbox"][name="${t.name}"]`).forEach(cb => {
+                    if (cb !== t) cb.checked = false;
+                });
+            }
+        }
+        updateTotalPriceDisplay();
+    });
+
+    function isMultiSelectActive() {
+        const btn = document.querySelector('.multi-select-toggle-btn');
+        return btn && btn.getAttribute('data-active') === 'true';
+    }
+
+    async function submitBooking() {
+        // รวบรวมค่าจากทุกกลุ่ม (รองรับทั้งแบบเลือกอันเดียวและเลือกหลายรายการ)
+        let selectedMasters = getSelectedMasters();
 
         const date = document.getElementById('book-date').value;
         const time = document.getElementById('book-time').value;
@@ -860,6 +982,7 @@
 
         // รวมชื่อแพ็กเกจทั้งหมดเข้าด้วยกันคั่นด้วยคอมมา (,)
         const combinedMasterText = selectedMasters.join(', ');
+        const totalPrice = updateTotalPriceDisplay();
 
         const { data: insertedBooking, error } = await supabaseClient.from('bookings').insert([{
             master: combinedMasterText,
@@ -891,7 +1014,8 @@
             name: name,
             age: age,
             status: status,
-            note: note
+            note: note,
+            total: totalPrice
         });
         window.location.href = `success.html?${queryParams.toString()}`;
     }
@@ -915,6 +1039,7 @@
 
         priceDisplay.innerText = totalPrice;
         radioBtn.value = `คำถามเจาะจง: ${displayCount} คำถาม (${totalPrice}บ.)`;
+        updateTotalPriceDisplay();
     }
 
     // ฟังก์ชันสำหรับเปิด/ปิดดูรายละเอียดคำถามแต่ละหัวข้อ
@@ -935,55 +1060,84 @@
     }
     
     // ฟังก์ชันสลับโหมดเลือกหลายรายการเฉพาะหมวดที่กำหนด
+    // หมวดที่รองรับหลายรายการ: ความรัก / การงาน / การเรียน / ทางเลือก 2 ทาง
+    // หมวดที่ "ไม่รองรับ" การเลือกหลายรายการเด็ดขาด: เจาะจง / โทร / เจาะจงเป็นเรื่องๆ (ถูกล็อกเมื่อเปิดโหมดนี้)
+    const LOCKED_BOX_IDS = ['box-tarot-single', 'phone-package-section', 'box-tarot-topic'];
+    const MULTI_GROUPS = ['horo_master_love', 'horo_master_work', 'horo_master_study', 'horo_master_choice'];
+
     function toggleMultiSelectMode() {
-        const multiGroups = ['horo_master_love', 'horo_master_work', 'horo_master_study', 'horo_master_choice'];
-        
-        const btn = document.getElementById('multi-select-toggle-btn');
-        const isMulti = btn.getAttribute('data-active') === 'true';
+        const btns = document.querySelectorAll('.multi-select-toggle-btn');
+        const isMulti = btns[0] && btns[0].getAttribute('data-active') === 'true';
 
         if (!isMulti) {
-            btn.setAttribute('data-active', 'true');
-            btn.className = "px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow transition";
-            btn.innerText = "✅ เปิดโหมดเลือกหลายรายการอยู่ (คลิกยกเลิก)";
+            // เปิดโหมดเลือกหลายรายการ
+            btns.forEach(btn => {
+                btn.setAttribute('data-active', 'true');
+                btn.className = "multi-select-toggle-btn px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shadow transition";
+                btn.innerText = "(ยกเลิก)";
+            });
 
-            multiGroups.forEach(groupName => {
-                const radios = document.querySelectorAll(`input[name="${groupName}"]`);
-                radios.forEach(r => {
-                    const cb = document.createElement('input');
-                    cb.type = 'checkbox';
-                    cb.name = groupName;
-                    cb.value = r.value;
-                    cb.checked = r.checked;
-                    cb.className = "accent-yellow-500 w-4 h-4 rounded";
-                    r.parentNode.replaceChild(cb, r);
+            LOCKED_BOX_IDS.forEach(boxId => {
+                const box = document.getElementById(boxId);
+                if (!box) return;
+                const overlay = box.querySelector('.multi-lock-overlay');
+                if (overlay) overlay.classList.remove('hidden');
+                box.querySelectorAll('input[name="horo_master_single"]').forEach(inp => {
+                    inp.checked = false;
+                    inp.disabled = true;
                 });
             });
         } else {
-            btn.setAttribute('data-active', 'false');
-            btn.className = "px-4 py-2 rounded-xl bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-xs shadow transition";
-            btn.innerText = "🔲 กดเพื่อเลือกหลายรายการ";
+            // ปิดโหมดเลือกหลายรายการ กลับสู่การเลือกทีละ 1 รายการต่อกลุ่ม
+            btns.forEach(btn => {
+                btn.setAttribute('data-active', 'false');
+                btn.className = "multi-select-toggle-btn px-3 py-1.5 rounded-lg bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-[11px] shadow transition";
+                btn.innerText = "เลือก";
+            });
 
-            multiGroups.forEach(groupName => {
-                const checkboxes = document.querySelectorAll(`input[type="checkbox"][name="${groupName}"]`);
-                checkboxes.forEach(cb => {
-                    const radio = document.createElement('input');
-                    radio.type = 'radio';
-                    radio.name = groupName;
-                    radio.value = cb.value;
-                    radio.checked = cb.checked;
-                    radio.className = "accent-yellow-500";
-                    cb.parentNode.replaceChild(radio, cb);
+            LOCKED_BOX_IDS.forEach(boxId => {
+                const box = document.getElementById(boxId);
+                if (!box) return;
+                const overlay = box.querySelector('.multi-lock-overlay');
+                if (overlay) overlay.classList.add('hidden');
+                box.querySelectorAll('input[name="horo_master_single"]').forEach(inp => {
+                    inp.disabled = false;
+                });
+            });
+
+            // ถ้ามีการเลือกไว้มากกว่า 1 รายการในกลุ่มที่รองรับหลายรายการ ให้เหลือไว้แค่รายการแรก
+            MULTI_GROUPS.forEach(groupName => {
+                const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
+                checked.forEach((cb, idx) => {
+                    if (idx > 0) cb.checked = false;
                 });
             });
         }
+        updateTotalPriceDisplay();
     }
     
-    function clearGroup(groupName) {
-    const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
-    checkboxes.forEach(cb => {
-        cb.checked = false;
-    });
-}
+    // ช่องกรอกข้อความเมื่อเลือก "อื่นๆ" ในคำถามแบบทางเลือก 2 ทาง
+    const choiceOtherCheckbox = document.getElementById('choice-other-checkbox');
+    const choiceOtherText = document.getElementById('choice-other-text');
+    if (choiceOtherCheckbox && choiceOtherText) {
+        choiceOtherCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                choiceOtherText.classList.remove('hidden');
+                choiceOtherText.focus();
+            } else {
+                choiceOtherText.classList.add('hidden');
+                choiceOtherText.value = '';
+                this.value = 'ทางเลือก: อื่นๆ (49บ.)';
+            }
+        });
+        choiceOtherText.addEventListener('input', function() {
+            const customText = this.value.trim();
+            choiceOtherCheckbox.value = customText
+                ? `ทางเลือก: อื่นๆ - ${customText} (49บ.)`
+                : 'ทางเลือก: อื่นๆ (49บ.)';
+            updateTotalPriceDisplay();
+        });
+    }
 
 </script>
 
