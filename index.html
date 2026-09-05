@@ -814,6 +814,23 @@
 
     let bookings = [];
     let settings = {};
+    let datePicker;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        datePicker = flatpickr("#book-date", {
+            locale: "th",
+            dateFormat: "Y-m-d",
+            defaultDate: "today",
+            minDate: "today",
+            maxDate: new Date().fp_incr(7),
+            onChange: function(selectedDates, dateStr, instance) {
+                updateAvailableTimes();
+            }
+        });
+        
+        fetchData();
+    });
+
    
     datePicker = flatpickr("#book-date", {
     locale: "th",
