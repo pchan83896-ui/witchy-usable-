@@ -29,12 +29,52 @@
             border: 1px solid rgba(234, 179, 8, 0.3);
             border-radius: 2rem;
         }
+
+        /* ===== ตกแต่งธีมเวทมนตร์ อ้างอิงจากภาพพระจันทร์-ดวงดาวสีทองบนพื้นม่วง ===== */
+        .mystic-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: rgba(234, 179, 8, 0.6);
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            margin: 0.25rem 0;
+        }
+        .mystic-divider::before, .mystic-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(234, 179, 8, 0.5), transparent);
+        }
+        .mystic-moonphases {
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 0.5em;
+            color: rgba(253, 224, 71, 0.55);
+        }
+        .mystic-card::before {
+            content: '✦';
+            position: absolute;
+            top: 10px; left: 14px;
+            color: rgba(234, 179, 8, 0.5);
+            font-size: 0.8rem;
+        }
+        .mystic-card::after {
+            content: '✦';
+            position: absolute;
+            bottom: 10px; right: 14px;
+            color: rgba(234, 179, 8, 0.5);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body class="theme-bg text-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="max-w-md w-full mystic-card p-6 md:p-8 shadow-2xl space-y-6 text-center">
+    <div class="max-w-md w-full mystic-card p-6 md:p-8 shadow-2xl space-y-6 text-center relative">
+        <div class="text-2xl">🌙 ✦ ☉ ✦ 🌙</div>
         <h1 class="text-2xl font-bold gold-gradient-text">จองคิวสำเร็จเรียบร้อย!</h1>
+        <div class="mystic-divider">✦</div>
         <p class="text-xs text-slate-300">กรุณาตรวจสอบข้อมูลและสแกน QR Code ด้านล่างเพื่อชำระเงินค่าบริการ</p>
         
         <div id="summary-details" class="bg-[#120521] border border-yellow-600/30 p-4 rounded-xl text-left text-xs space-y-2 text-slate-200">
@@ -86,6 +126,7 @@
             const phone = params.get('phone') || '-';
             const ig = params.get('ig') || '-';
             const note = params.get('note') || '-';
+            const total = params.get('total') || '0';
 
             document.getElementById('summary-details').innerHTML = `
                 <p><strong>เลขคิว:</strong> <span class="text-yellow-400 font-bold">${queue}</span></p>
@@ -93,6 +134,10 @@
                 <p><strong>รายการ:</strong> ${master}</p>
                 <p><strong>วันที่:</strong> ${date} | <strong>เวลา:</strong> ${time}</p>
                 <p><strong>หมายเหตุ:</strong> ${note}</p>
+                <p class="pt-2 mt-2 border-t border-yellow-600/20 flex justify-between items-center">
+                    <strong>ราคารวม:</strong>
+                    <span class="text-yellow-400 font-bold text-base">${Number(total).toLocaleString('th-TH')} บาท</span>
+                </p>
             `;
         });
     </script>
