@@ -6,6 +6,7 @@
     <title>หลังบ้านหมอดู - ร้าน Witch yu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Prompt', sans-serif; }
@@ -57,10 +58,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold gold-text mb-2">📞 คำถามแบบโทร</label>
-                    <button id="phone-toggle-btn" onclick="togglePhoneService()" class="px-4 py-2 rounded-xl font-bold text-xs shadow"></button>
-                </div>
-                <div>
                     <label class="block text-sm font-semibold gold-text mb-2">➕ เพิ่มรอบเวลาใหม่</label>
                     <div class="flex gap-2">
                         <input type="text" id="new-slot-input" placeholder="เช่น 12:00 - 12:30 น." class="w-full bg-[#1a0b2e] border border-yellow-600/30 rounded-xl px-3 py-2 text-xs text-white">
@@ -93,8 +90,7 @@
                             <th class="p-4">วัน-เวลา</th>
                             <th class="p-4">แพ็กเกจ</th>
                             <th class="p-4">ชื่อลูกค้า</th>
-                            <th class="p-4">เบอร์ / IG</th>
-                            <th class="p-4">หมายเหตุ</th>
+                                    <th class="p-4">หมายเหตุ</th>
                             <th class="p-4 text-center">จัดการ</th>
                         </tr>
                     </thead>
@@ -105,9 +101,11 @@
     </main>
 
     <script>
-        const SUPABASE_URL = 'https://xmlvisoddzhhfvncntgv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhtbHZpc29kZHpoaGZ2bmNudGd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzODI0NTksImV4cCI6MjEwMzk1ODQ1OX0.cTnihQOyfrsddsrBm5ehmFF1tEK49YoOvGZHqxu2QjE';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    const SUPABASE_URL = 'https://yttxybfektembafzxbdq.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0dHh5YmZla3RlbWJhZnp4YmRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MDAzOTEsImV4cCI6MjEwNDA3NjM5MX0.51nc6Rd02p5pwPvQyTRDDnC1I0wOaQa9uMp7JKkaVMk';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
         let settings = {};
         let bookings = [];
@@ -137,15 +135,6 @@
                 shopBtn.innerHTML = "🔴 ร้านปิดอยู่ (คลิกเปิด)";
             }
 
-            const phoneBtn = document.getElementById('phone-toggle-btn');
-            if (settings.is_phone_allowed) {
-                phoneBtn.className = "px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs";
-                phoneBtn.innerHTML = "✅ เปิดคำถามโทรอยู่ (คลิกปิด)";
-            } else {
-                phoneBtn.className = "px-4 py-2 bg-red-600 text-white rounded-xl text-xs";
-                phoneBtn.innerHTML = "❌ ปิดคำถามโทรอยู่ (คลิกเปิด)";
-            }
-
             renderSlotsConfig();
             renderDisabledDates();
             renderTable();
@@ -153,11 +142,6 @@
 
         async function toggleShopStatus() {
             await supabaseClient.from('settings').update({ is_shop_open: !settings.is_shop_open }).eq('id', 1);
-            fetchAdminData();
-        }
-
-        async function togglePhoneService() {
-            await supabaseClient.from('settings').update({ is_phone_allowed: !settings.is_phone_allowed }).eq('id', 1);
             fetchAdminData();
         }
 
@@ -247,7 +231,7 @@
             const tbody = document.getElementById('booking-list');
             tbody.innerHTML = '';
             if (bookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
                 return;
             }
             bookings.forEach(b => {
@@ -257,7 +241,6 @@
                         <td class="p-4">${b.booking_date}<br><span class="text-xs text-yellow-300">${b.booking_time}</span></td>
                         <td class="p-4">${b.master}</td>
                         <td class="p-4">${b.client_name}</td>
-                        <td class="p-4">${b.client_phone}<br><span class="text-xs text-yellow-400">${b.client_ig}</span></td>
                         <td class="p-4 text-slate-400">${b.note}</td>
                         <td class="p-4 text-center">
                             <button onclick="deleteBooking(${b.id})" class="px-3 py-1 bg-red-950 text-red-400 border border-red-600/40 rounded-lg text-xs">ลบ</button>
