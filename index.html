@@ -814,22 +814,22 @@
 
     let bookings = [];
     let settings = {};
-    let datePicker;
+   
+    datePicker = flatpickr("#book-date", {
+    locale: "th",
+    dateFormat: "Y-m-d",
+    defaultDate: "today",
+    minDate: "today",
+    maxDate: new Date().fp_incr(7),
 
-    window.addEventListener('DOMContentLoaded', () => {
-        datePicker = flatpickr("#book-date", {
-            locale: "th",
-            dateFormat: "Y-m-d",
-            defaultDate: "today",
-            minDate: "today",
-            maxDate: new Date().fp_incr(7),
-            onChange: function(selectedDates, dateStr, instance) {
-                updateAvailableTimes();
-            }
-        });
-        
-        fetchData();
-    });
+    disableMobile: true,
+    allowInput: false,
+    clickOpens: true,
+
+    onChange: function(selectedDates, dateStr, instance) {
+        updateAvailableTimes();
+    }
+});
 
     async function fetchData() {
         const { data: settingsData } = await supabaseClient.from('settings').select('*').eq('id', 1).single();
