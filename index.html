@@ -823,6 +823,9 @@
             defaultDate: "today",
             minDate: "today",
             maxDate: new Date().fp_incr(7),
+
+            disableMobile: true,
+            
             onChange: function(selectedDates, dateStr, instance) {
                 updateAvailableTimes();
             }
@@ -1144,6 +1147,18 @@
             updateTotalPriceDisplay();
         });
     }
+
+    #book-date {
+    width: 100% !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+}
 
 </script>
 
