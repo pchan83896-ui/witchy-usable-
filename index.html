@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         html, body { overflow-x: hidden; max-width: 100%; }
         body { font-family: 'Prompt', sans-serif; }
@@ -1170,7 +1170,7 @@
     // ใช้ pdf.js เรนเดอร์ทีละหน้าเป็น canvas ตามสัดส่วนจริงของไฟล์ PDF โดยอัตโนมัติ
     // ไม่ว่าไฟล์จะเป็นแนวนอน 16:9, แนวตั้ง A4 หรือขนาดอื่นในอนาคต ก็จะปรับพอดีเองโดยไม่ต้องแก้โค้ด
     if (window.pdfjsLib) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
     async function openBookingStepsModal() {
@@ -1179,6 +1179,11 @@
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         pagesContainer.innerHTML = '<p class="text-center text-yellow-300 text-sm py-10">กำลังโหลดไฟล์...</p>';
+
+        if (!window.pdfjsLib) {
+            pagesContainer.innerHTML = '<p class="text-center text-red-300 text-sm py-10">โหลดตัวแสดงผล PDF ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่</p>';
+            return;
+        }
 
         try {
             const loadingTask = pdfjsLib.getDocument('booking-steps.pdf');
