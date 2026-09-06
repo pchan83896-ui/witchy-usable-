@@ -218,7 +218,7 @@
     </div>
     <div class="pt-2 flex justify-center">
         <button type="button" onclick="openBookingStepsModal()" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/40 hover:bg-slate-800 text-xs font-semibold shadow-md transition flex items-center gap-1.5">
-            <span>📖 ดูขั้นตอนการจองคิวแบบละเอียด</span>
+            <span>ขั้นตอนแบบละเอียด</span>
         </button>
     </div>
 </div>
@@ -227,7 +227,7 @@
 <div id="booking-steps-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target === this) closeBookingStepsModal()">
     <div id="booking-steps-card" class="mystic-card relative w-full max-w-3xl h-[92vh] p-3 md:p-6 shadow-2xl flex flex-col">
         <div class="flex items-center justify-between mb-3 shrink-0">
-            <h3 class="text-base md:text-lg font-bold gold-gradient-text">📖 ขั้นตอนการจองคิวแบบละเอียด</h3>
+            <h3 class="text-base md:text-lg font-bold gold-gradient-text">ขั้นตอนแบบละเอียด</h3>
             <button type="button" onclick="closeBookingStepsModal()" aria-label="ปิด" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-950/60 text-red-300 border border-red-600/40 hover:bg-red-900 text-lg font-bold shrink-0">×</button>
         </div>
         <!-- พื้นที่แสดง PDF: เรนเดอร์ทีละหน้าเป็น canvas ตามสัดส่วนจริงของไฟล์ (รองรับทั้ง 16:9, A4 หรือขนาดอื่นในอนาคตอัตโนมัติ) เลื่อนดูได้ครบทุกหน้า -->
@@ -254,7 +254,7 @@
 
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold gold-text border-b border-yellow-600/30 pb-2 flex items-center gap-2">
-                        <span>เซตคำถามเลือกหลายรายการ (เลือก)</span>
+                        <span>เซตคำถาม</span>
                         
                     </h2>
                     
@@ -314,7 +314,7 @@
                             <div class="multi-lock-overlay hidden absolute inset-0 z-10 flex items-center justify-center text-center px-4 rounded-xl bg-[#0d041a]/85 backdrop-blur-[1px]">
                                 <span class="text-xs font-semibold text-yellow-300">ไม่สามารถจองหลายรายการได้</span>
                             </div>
-                            <h3 class="font-bold text-base gold-text">คำถามแบบโทร (ไม่จำกัดคำถาม)</h3>
+                            <h3 class="font-bold text-base gold-text">คำถามแบบโทร</h3>
                             <div class="space-y-1.5 text-xs text-slate-300">
                                 <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
                                     <span>• โทร 15 นาที</span>
@@ -398,7 +398,7 @@
                           <!-- 9. เซตคำถามความรัก -->
                         <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-3">
                             <div class="flex justify-between items-center">
-                                <h3 class="font-bold text-base gold-text">เซตคำถามความรัก</h3>
+                                <h3 class="font-bold text-base gold-text">เซตความรัก 49บ.</h3>
                                 <button type="button" onclick="toggleDetails('detail-all-love')" class="px-3 py-1 text-xs bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 rounded-lg transition">
                                     ดูรายละเอียด
                                 </button>
@@ -519,7 +519,7 @@
                            <!-- 9. เซตคำถามความรัก -->
                         <div class="border border-yellow-600/30 p-4 rounded-xl bg-[#120521]/60 space-y-3">
                             <div class="flex justify-between items-center">
-                                <h3 class="font-bold text-base gold-text">เซตคำถามความรักราคา 59บ.</h3>
+                                <h3 class="font-bold text-base gold-text">เซตความรัก 59บ.</h3>
                                 <button type="button" onclick="toggleDetails('detail-all-love-59')" class="px-3 py-1 text-xs bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 rounded-lg transition">
                                     ดูรายละเอียด
                                 </button>
