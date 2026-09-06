@@ -1259,11 +1259,13 @@
 
         if (!isMulti) {
             // เปิดโหมดเลือกหลายรายการ
+            // เปิดโหมดเลือกหลายรายการ (เปลี่ยนให้ใช้ดีไซน์เดียวกับปุ่ม "เลือก" ปกติ)
             btns.forEach(btn => {
                 btn.setAttribute('data-active', 'true');
-                btn.className = "multi-select-toggle-btn px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px] shadow transition";
-                btn.innerText = "(ยกเลิก)";
+                btn.className = "multi-select-toggle-btn px-3 py-1.5 rounded-lg bg-slate-800 text-yellow-300 border border-yellow-600/40 font-bold text-[11px] shadow transition";
+                btn.innerText = "ยกเลิก";
             });
+
 
             LOCKED_BOX_IDS.forEach(boxId => {
                 const box = document.getElementById(boxId);
