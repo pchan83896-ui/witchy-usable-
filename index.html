@@ -223,14 +223,15 @@
 </div>
 
 <!-- ป็อปอัพขั้นตอนการจองคิวแบบละเอียด -->
-<div id="booking-steps-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target === this) closeBookingStepsModal()">
-    <div class="mystic-card relative w-full max-w-2xl max-h-[85vh] p-4 md:p-6 shadow-2xl flex flex-col">
-        <div class="flex items-center justify-between mb-3">
+<div id="booking-steps-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target === this) closeBookingStepsModal()">
+    <div class="mystic-card relative w-full max-w-4xl h-[92vh] p-3 md:p-6 shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between mb-3 shrink-0">
             <h3 class="text-base md:text-lg font-bold gold-gradient-text">📖 ขั้นตอนการจองคิวแบบละเอียด</h3>
             <button type="button" onclick="closeBookingStepsModal()" aria-label="ปิด" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-950/60 text-red-300 border border-red-600/40 hover:bg-red-900 text-lg font-bold shrink-0">×</button>
         </div>
-        <div class="flex-1 overflow-hidden rounded-xl border border-yellow-600/20 bg-[#0d041a]">
-            <iframe id="booking-steps-iframe" src="" class="w-full h-full min-h-[60vh]" title="ขั้นตอนการจองคิวแบบละเอียด"></iframe>
+        <!-- พื้นที่แสดง PDF: ปรับความสูงเต็มพื้นที่ที่เหลือ และเลื่อนดูได้ครบทุกหน้า ไม่ว่าไฟล์จะเป็นสัดส่วน 16:9 หรือ A4 -->
+        <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain rounded-xl border border-yellow-600/20 bg-[#0d041a]" style="-webkit-overflow-scrolling: touch;">
+            <iframe id="booking-steps-iframe" src="" class="block w-full h-full border-0" style="min-height: 100%;" title="ขั้นตอนการจองคิวแบบละเอียด"></iframe>
         </div>
     </div>
 </div>
@@ -1169,7 +1170,7 @@
     function openBookingStepsModal() {
         const modal = document.getElementById('booking-steps-modal');
         const iframe = document.getElementById('booking-steps-iframe');
-        iframe.src = 'booking-steps.pdf';
+        iframe.src = 'booking-steps.pdf#view=FitH&toolbar=1';
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
     }
