@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,16 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
     <style>
+        html, body { overflow-x: hidden; max-width: 100%; }
         body { font-family: 'Prompt', sans-serif; }
+        /* แก้ปัญหาช่องกรอกวันที่แสดงผลเยื้อง/ล้นขอบจอบน iPhone และ iPad (Safari) */
+        #book-date {
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+        }
         .theme-bg {
             background-color: #1a0b2e;
             background-image: radial-gradient(circle at 50% 20%, #2e1046 0%, #1a0b2e 70%, #0d041a 100%);
@@ -49,6 +58,8 @@
             color: #f8fafc !important;
             font-family: 'Prompt', sans-serif !important;
             padding: 10px !important;
+            max-width: calc(100vw - 2rem) !important;
+            box-sizing: border-box !important;
         }
         .flatpickr-months .flatpickr-month {
             background: transparent !important;
@@ -204,6 +215,51 @@
             <p>4. <strong>ยืนยันการจองและชำระเงิน</strong></p>
         </div>
     </div>
+    <div class="pt-2 flex justify-center">
+        <button type="button" onclick="openBookingStepsModal()" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/40 hover:bg-slate-800 text-xs font-semibold shadow-md transition flex items-center gap-1.5">
+            <span>📖 ดูขั้นตอนการจองคิวแบบละเอียด</span>
+        </button>
+    </div>
+</div>
+
+<!-- โมดัลแสดงขั้นตอนการจองคิวแบบละเอียด -->
+<div id="booking-steps-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target===this) closeBookingStepsModal()">
+    <div class="mystic-card w-full max-w-lg max-h-[85vh] overflow-y-auto p-5 md:p-6 shadow-2xl space-y-4 relative">
+        <div class="flex items-center justify-between sticky top-0 bg-[#1a0b2e]/95 -mt-1 pt-1 pb-2 z-10">
+            <h2 class="text-lg font-bold gold-gradient-text">ขั้นตอนการจองคิวแบบละเอียด</h2>
+            <button type="button" onclick="closeBookingStepsModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 text-yellow-300 border border-yellow-600/40 hover:bg-slate-700 transition">✕</button>
+        </div>
+        <div class="space-y-4 text-xs md:text-sm text-slate-300">
+            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
+                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">1</div>
+                <div>
+                    <p class="font-semibold text-yellow-300 mb-1">กรอกข้อมูลส่วนตัว</p>
+                    <p>กรอกชื่อเล่น-ชื่อจริง อายุ และความสัมพันธ์ปัจจุบัน (เช่น โสด, มีแฟน) ให้ครบถ้วนในช่อง "ข้อมูลผู้จอง"</p>
+                </div>
+            </div>
+            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
+                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">2</div>
+                <div>
+                    <p class="font-semibold text-yellow-300 mb-1">เลือกเซตคำถามและราคาที่ต้องการ</p>
+                    <p>เลือกได้จากหลายหมวด เช่น คำถามเจาะจง, คำถามแบบโทร, คำถามเจาะจงเป็นเรื่องๆ หรือคำถาม 2 ทางเลือก โดยทั่วไปเลือกได้หมวดละ 1 รายการ หากต้องการเลือกหลายรายการพร้อมกัน (เฉพาะบางหมวด) ให้กดปุ่ม "เลือก" มุมขวาบนก่อน</p>
+                </div>
+            </div>
+            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
+                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">3</div>
+                <div>
+                    <p class="font-semibold text-yellow-300 mb-1">เลือกวันเวลาที่ต้องการ</p>
+                    <p>เลือกวันที่จากปฏิทิน แล้วเลือกรอบเวลาที่ยังว่างจากช่อง "เวลา" ระบบจะแสดงรอบที่ถูกจองไปแล้วให้ทราบทันที</p>
+                </div>
+            </div>
+            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
+                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">4</div>
+                <div>
+                    <p class="font-semibold text-yellow-300 mb-1">ยืนยันการจองและชำระเงิน</p>
+                    <p>ตรวจสอบรายการและราคารวมที่เลือกทั้งหมด กดปุ่ม "ยืนยันการจองคิว" ระบบจะพาไปหน้าสรุปพร้อม QR Code สำหรับโอนเงิน จากนั้นส่งหลักฐานการชำระเงินให้ทางร้านทาง Instagram เพื่อยืนยันสิทธิ์คิวของคุณ</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -270,6 +326,12 @@
                                         </label>
                                     </div>
                                 </div>
+
+                                <!-- ช่องพิมพ์ข้อความคำถาม แสดงเมื่อเลือกแพ็กเกจคำถามเจาะจงรายการใดรายการหนึ่งในกล่องนี้ -->
+                                <div id="tarot-question-text-wrap" class="hidden p-2 mt-2 border-t border-yellow-600/20 space-y-1.5">
+                                    <span class="text-yellow-300">• พิมพ์คำถามของคุณ:</span>
+                                    <textarea id="tarot-question-text" rows="3" placeholder="พิมพ์คำถามที่ต้องการถามที่นี่..." class="w-full bg-[#1a0b2e] border border-yellow-600/30 rounded-lg px-3 py-2 text-white text-xs"></textarea>
+                                </div>
                             </div>
                         </div>
 
@@ -292,11 +354,17 @@
                                     <span>• โทร 1 ชั่วโมง</span>
                                     <span class="flex items-center gap-2"><strong class="text-yellow-400">239 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: 1 ชั่วโมง (239บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
                                 </label>
-                                <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
-                                    <span>• โทรไม่จำกัดชั่วโมง/คำถาม</span>
-                                    <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="checkbox" name="horo_master_single" value="คำถามแบบโทร: ไม่จำกัด (299บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
-                                </label>
+                                <div class="relative">
+                                    <label class="flex items-center justify-between p-1.5 rounded hover:bg-yellow-950/20 cursor-pointer">
+                                        <span>• โทรไม่จำกัดชั่วโมง/คำถาม</span>
+                                        <span class="flex items-center gap-2"><strong class="text-yellow-400">299 บาท</strong> <input type="checkbox" id="phone-unlimited-checkbox" name="horo_master_single" value="คำถามแบบโทร: ไม่จำกัด (299บ.)" class="accent-yellow-500 w-4 h-4 rounded"></span>
+                                    </label>
+                                    <div id="phone-unlimited-overlay" class="hidden absolute inset-0 z-10 flex items-center justify-center rounded bg-[#0d041a]/85 backdrop-blur-[1px]">
+                                        <span class="text-[11px] font-semibold text-yellow-300">ถูกต้องแล้ว</span>
+                                    </div>
+                                </div>
                             </div>
+                            <p class="text-[10px] text-slate-400 pt-1">* แพ็กเกจโทรไม่จำกัดชั่วโมง/คำถาม จองได้เฉพาะรอบเวลา 22:30 น. เท่านั้น</p>
                         </div>
 
                         <!-- 3. คำถามเจาะจงเป็นเรื่องๆ -->
@@ -894,6 +962,57 @@
             }
             timeSelect.appendChild(option);
         });
+
+        // ถ้าเลือกแพ็กเกจ "โทรไม่จำกัดชั่วโมง/คำถาม" ให้จำกัดตัวเลือกเวลาให้เหลือแค่รอบ 22:30 เท่านั้น
+        const phoneUnlimitedBox = document.getElementById('phone-unlimited-checkbox');
+        if (phoneUnlimitedBox && phoneUnlimitedBox.checked) {
+            let matchedSlotOption = null;
+            Array.from(timeSelect.options).forEach(opt => {
+                if (opt.value.includes('22:30')) {
+                    matchedSlotOption = opt;
+                } else {
+                    opt.disabled = true;
+                    opt.style.color = '#475569';
+                }
+            });
+            if (matchedSlotOption && !matchedSlotOption.disabled) {
+                timeSelect.value = matchedSlotOption.value;
+            }
+        }
+
+        checkPhoneUnlimitedAvailability();
+    }
+
+    // ตรวจสอบว่าแพ็กเกจ "โทรไม่จำกัดชั่วโมง/คำถาม" ยังจองได้อยู่ไหมสำหรับวันที่เลือก
+    // เงื่อนไข: จองได้เฉพาะรอบเวลา 22:30 และต้องไม่มีใครจองรอบ 22:30 (ไม่ว่าคำถามใด) หรือจองแพ็กเกจนี้ไปแล้วในวันนั้น
+    function checkPhoneUnlimitedAvailability() {
+        const checkbox = document.getElementById('phone-unlimited-checkbox');
+        const overlay = document.getElementById('phone-unlimited-overlay');
+        if (!checkbox || !overlay) return;
+
+        const selectedDate = document.getElementById('book-date').value;
+        const timeSlots = settings.time_slots_config || [];
+        const slot2230 = timeSlots.find(s => (s.time || '').includes('22:30'));
+
+        const slotTaken = slot2230
+            ? bookings.some(b => b.booking_date === selectedDate && b.booking_time === slot2230.time)
+            : true;
+        const unlimitedAlreadyBooked = bookings.some(b => b.booking_date === selectedDate && (b.master || '').includes('คำถามแบบโทร: ไม่จำกัด'));
+        const slotClosed = slot2230 ? (slot2230.isOpen === false) : true;
+
+        const blocked = !selectedDate || !slot2230 || slotTaken || unlimitedAlreadyBooked || slotClosed;
+
+        if (blocked) {
+            overlay.classList.remove('hidden');
+            checkbox.disabled = true;
+            if (checkbox.checked) {
+                checkbox.checked = false;
+                updateTotalPriceDisplay();
+            }
+        } else {
+            overlay.classList.add('hidden');
+            checkbox.disabled = false;
+        }
     }
 
     // กลุ่ม input ทั้งหมดที่ใช้เก็บแพ็กเกจ/คำถามที่เลือก
@@ -962,8 +1081,29 @@
                 });
             }
         }
+        if (document.getElementById('box-tarot-single').contains(t)) {
+            toggleTarotQuestionTextBox();
+        }
+
+        if (t.id === 'phone-unlimited-checkbox') {
+            updateAvailableTimes();
+        }
+
         updateTotalPriceDisplay();
     });
+
+    // แสดง/ซ่อนช่องพิมพ์คำถาม ตามการเลือกในกล่อง "คำถามเจาะจง"
+    function toggleTarotQuestionTextBox() {
+        const box = document.getElementById('box-tarot-single');
+        const wrap = document.getElementById('tarot-question-text-wrap');
+        const hasSelection = box.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+        if (hasSelection) {
+            wrap.classList.remove('hidden');
+        } else {
+            wrap.classList.add('hidden');
+            document.getElementById('tarot-question-text').value = '';
+        }
+    }
 
     function isMultiSelectActive() {
         const btn = document.querySelector('.multi-select-toggle-btn');
@@ -979,7 +1119,13 @@
         const name = document.getElementById('client-name').value.trim();
         const age = document.getElementById('client-age').value.trim();
         const status = document.getElementById('client-status').value.trim();
-        const note = document.getElementById('client-note').value.trim() || '-';
+        let note = document.getElementById('client-note').value.trim() || '-';
+
+        const tarotQuestionEl = document.getElementById('tarot-question-text');
+        const tarotQuestionText = tarotQuestionEl ? tarotQuestionEl.value.trim() : '';
+        if (tarotQuestionText) {
+            note = `คำถาม: ${tarotQuestionText}` + (note !== '-' ? ` | หมายเหตุ: ${note}` : '');
+        }
 
         if (selectedMasters.length === 0 || !date || !time || !name || !age || !status) {
             alert('กรุณากรอกข้อมูลและเลือกแพ็กเกจอย่างน้อย 1 รายการให้ครบถ้วน');
@@ -997,7 +1143,8 @@
             client_name: name,
             client_age: Number(age),
             client_status: status,
-            note: note
+            note: note,
+            total_price: totalPrice
         }]).select('queue_no').single();
 
         if (error) {
@@ -1024,6 +1171,16 @@
             total: totalPrice
         });
         window.location.href = `success.html?${queryParams.toString()}`;
+    }
+
+    function openBookingStepsModal() {
+        document.getElementById('booking-steps-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingStepsModal() {
+        document.getElementById('booking-steps-modal').classList.add('hidden');
+        document.body.style.overflow = '';
     }
 
     function toggleMobileMenu() {
