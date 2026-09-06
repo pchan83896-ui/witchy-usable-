@@ -216,49 +216,9 @@
         </div>
     </div>
     <div class="pt-2 flex justify-center">
-        <button type="button" onclick="openBookingStepsModal()" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/40 hover:bg-slate-800 text-xs font-semibold shadow-md transition flex items-center gap-1.5">
+        <a href="booking-steps.pdf" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900/80 text-yellow-300 border border-yellow-600/40 hover:bg-slate-800 text-xs font-semibold shadow-md transition flex items-center gap-1.5">
             <span>📖 ดูขั้นตอนการจองคิวแบบละเอียด</span>
-        </button>
-    </div>
-</div>
-
-<!-- โมดัลแสดงขั้นตอนการจองคิวแบบละเอียด -->
-<div id="booking-steps-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target===this) closeBookingStepsModal()">
-    <div class="mystic-card w-full max-w-lg max-h-[85vh] overflow-y-auto p-5 md:p-6 shadow-2xl space-y-4 relative">
-        <div class="flex items-center justify-between sticky top-0 bg-[#1a0b2e]/95 -mt-1 pt-1 pb-2 z-10">
-            <h2 class="text-lg font-bold gold-gradient-text">ขั้นตอนการจองคิวแบบละเอียด</h2>
-            <button type="button" onclick="closeBookingStepsModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 text-yellow-300 border border-yellow-600/40 hover:bg-slate-700 transition">✕</button>
-        </div>
-        <div class="space-y-4 text-xs md:text-sm text-slate-300">
-            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
-                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">1</div>
-                <div>
-                    <p class="font-semibold text-yellow-300 mb-1">กรอกข้อมูลส่วนตัว</p>
-                    <p>กรอกชื่อเล่น-ชื่อจริง อายุ และความสัมพันธ์ปัจจุบัน (เช่น โสด, มีแฟน) ให้ครบถ้วนในช่อง "ข้อมูลผู้จอง"</p>
-                </div>
-            </div>
-            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
-                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">2</div>
-                <div>
-                    <p class="font-semibold text-yellow-300 mb-1">เลือกเซตคำถามและราคาที่ต้องการ</p>
-                    <p>เลือกได้จากหลายหมวด เช่น คำถามเจาะจง, คำถามแบบโทร, คำถามเจาะจงเป็นเรื่องๆ หรือคำถาม 2 ทางเลือก โดยทั่วไปเลือกได้หมวดละ 1 รายการ หากต้องการเลือกหลายรายการพร้อมกัน (เฉพาะบางหมวด) ให้กดปุ่ม "เลือก" มุมขวาบนก่อน</p>
-                </div>
-            </div>
-            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
-                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">3</div>
-                <div>
-                    <p class="font-semibold text-yellow-300 mb-1">เลือกวันเวลาที่ต้องการ</p>
-                    <p>เลือกวันที่จากปฏิทิน แล้วเลือกรอบเวลาที่ยังว่างจากช่อง "เวลา" ระบบจะแสดงรอบที่ถูกจองไปแล้วให้ทราบทันที</p>
-                </div>
-            </div>
-            <div class="border border-yellow-600/30 rounded-xl p-3 flex gap-3 items-start bg-[#120521]/60">
-                <div class="shrink-0 w-9 h-9 rounded-full gold-button flex items-center justify-center font-bold">4</div>
-                <div>
-                    <p class="font-semibold text-yellow-300 mb-1">ยืนยันการจองและชำระเงิน</p>
-                    <p>ตรวจสอบรายการและราคารวมที่เลือกทั้งหมด กดปุ่ม "ยืนยันการจองคิว" ระบบจะพาไปหน้าสรุปพร้อม QR Code สำหรับโอนเงิน จากนั้นส่งหลักฐานการชำระเงินให้ทางร้านทาง Instagram เพื่อยืนยันสิทธิ์คิวของคุณ</p>
-                </div>
-            </div>
-        </div>
+        </a>
     </div>
 </div>
 
@@ -1145,7 +1105,7 @@
             client_status: status,
             note: note,
             total_price: totalPrice
-        }]).select('queue_no').single();
+        }]).select('id').single();
 
         if (error) {
             if (error.code === '23505') {
@@ -1157,10 +1117,7 @@
             return;
         }
 
-        const queueNo = insertedBooking.queue_no;
-
         const queryParams = new URLSearchParams({
-            queue: queueNo,
             master: combinedMasterText,
             date: date,
             time: time,
@@ -1171,16 +1128,6 @@
             total: totalPrice
         });
         window.location.href = `success.html?${queryParams.toString()}`;
-    }
-
-    function openBookingStepsModal() {
-        document.getElementById('booking-steps-modal').classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeBookingStepsModal() {
-        document.getElementById('booking-steps-modal').classList.add('hidden');
-        document.body.style.overflow = '';
     }
 
     function toggleMobileMenu() {
@@ -1309,3 +1256,4 @@
 
 </body>
 </html>
+                    
