@@ -145,6 +145,7 @@
                             <th class="p-4">เลขคิว</th>
                             <th class="p-4">วัน-เวลา</th>
                             <th class="p-4">แพ็กเกจ</th>
+                            <th class="p-4">ราคา</th>
                             <th class="p-4">ชื่อลูกค้า</th>
                                     <th class="p-4">หมายเหตุ</th>
                             <th class="p-4 text-center">จัดการ</th>
@@ -330,7 +331,7 @@
             const tbody = document.getElementById('booking-list');
             tbody.innerHTML = '';
             if (bookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
                 return;
             }
             bookings.forEach(b => {
@@ -339,6 +340,7 @@
                         <td class="p-4 font-bold text-yellow-400">${b.queue_no}</td>
                         <td class="p-4">${b.booking_date}<br><span class="text-xs text-yellow-300">${b.booking_time}</span></td>
                         <td class="p-4">${b.master}</td>
+                        <td class="p-4 font-semibold text-yellow-400">${b.total_price != null ? Number(b.total_price).toLocaleString('th-TH') + ' บาท' : '-'}</td>
                         <td class="p-4">${b.client_name}</td>
                         <td class="p-4 text-slate-400">${b.note}</td>
                         <td class="p-4 text-center">
