@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
     <style>
         html, body { overflow-x: hidden; max-width: 100%; }
         body { font-family: 'Prompt', sans-serif; }
@@ -224,14 +225,13 @@
 
 <!-- ป็อปอัพขั้นตอนการจองคิวแบบละเอียด -->
 <div id="booking-steps-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm" onclick="if(event.target === this) closeBookingStepsModal()">
-    <div class="mystic-card relative w-full max-w-4xl h-[92vh] p-3 md:p-6 shadow-2xl flex flex-col">
+    <div id="booking-steps-card" class="mystic-card relative w-full max-w-3xl h-[92vh] p-3 md:p-6 shadow-2xl flex flex-col">
         <div class="flex items-center justify-between mb-3 shrink-0">
             <h3 class="text-base md:text-lg font-bold gold-gradient-text">📖 ขั้นตอนการจองคิวแบบละเอียด</h3>
             <button type="button" onclick="closeBookingStepsModal()" aria-label="ปิด" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-950/60 text-red-300 border border-red-600/40 hover:bg-red-900 text-lg font-bold shrink-0">×</button>
         </div>
-        <!-- พื้นที่แสดง PDF: ปรับความสูงเต็มพื้นที่ที่เหลือ และเลื่อนดูได้ครบทุกหน้า ไม่ว่าไฟล์จะเป็นสัดส่วน 16:9 หรือ A4 -->
-        <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain rounded-xl border border-yellow-600/20 bg-[#0d041a]" style="-webkit-overflow-scrolling: touch;">
-            <iframe id="booking-steps-iframe" src="" class="block w-full h-full border-0" style="min-height: 100%;" title="ขั้นตอนการจองคิวแบบละเอียด"></iframe>
+        <!-- พื้นที่แสดง PDF: เรนเดอร์ทีละหน้าเป็น canvas ตามสัดส่วนจริงของไฟล์ (รองรับทั้ง 16:9, A4 หรือขนาดอื่นในอนาคตอัตโนมัติ) เลื่อนดูได้ครบทุกหน้า -->
+        <div id="booking-steps-pages" class="flex-1 min-h-0 overflow-y-auto overscroll-contain rounded-xl border border-yellow-600/20 bg-[#0d041a] p-2 space-y-3" style="-webkit-overflow-scrolling: touch;">
         </div>
     </div>
 </div>
@@ -1167,19 +1167,53 @@
     }
 
     // ฟังก์ชันเปิด/ปิดป็อปอัพขั้นตอนการจองคิวแบบละเอียด (ไม่เด้งไปแท็บอื่น)
-    function openBookingStepsModal() {
+    // ใช้ pdf.js เรนเดอร์ทีละหน้าเป็น canvas ตามสัดส่วนจริงของไฟล์ PDF โดยอัตโนมัติ
+    // ไม่ว่าไฟล์จะเป็นแนวนอน 16:9, แนวตั้ง A4 หรือขนาดอื่นในอนาคต ก็จะปรับพอดีเองโดยไม่ต้องแก้โค้ด
+    if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
+    }
+
+    async function openBookingStepsModal() {
         const modal = document.getElementById('booking-steps-modal');
-        const iframe = document.getElementById('booking-steps-iframe');
-        iframe.src = 'booking-steps.pdf#view=FitH&toolbar=1';
+        const pagesContainer = document.getElementById('booking-steps-pages');
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        pagesContainer.innerHTML = '<p class="text-center text-yellow-300 text-sm py-10">กำลังโหลดไฟล์...</p>';
+
+        try {
+            const loadingTask = pdfjsLib.getDocument('booking-steps.pdf');
+            const pdf = await loadingTask.promise;
+            pagesContainer.innerHTML = '';
+
+            // ความกว้างที่มีให้ใช้จริงในกล่อง (หัก padding ออก)
+            const availableWidth = pagesContainer.clientWidth - 16;
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const unscaledViewport = page.getViewport({ scale: 1 });
+                // คำนวณสเกลจากความกว้างจริงของแต่ละหน้า เพื่อให้พอดีกรอบเสมอไม่ว่าไฟล์จะสัดส่วนใด
+                const scale = (availableWidth / unscaledViewport.width) * (window.devicePixelRatio || 1);
+                const viewport = page.getViewport({ scale });
+
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                canvas.className = 'w-full h-auto rounded-lg shadow-md block';
+                pagesContainer.appendChild(canvas);
+
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+            }
+        } catch (err) {
+            pagesContainer.innerHTML = '<p class="text-center text-red-300 text-sm py-10">ไม่สามารถโหลดไฟล์ขั้นตอนการจองคิวได้ กรุณาลองใหม่อีกครั้ง</p>';
+            console.error('โหลด PDF ไม่สำเร็จ:', err);
+        }
     }
 
     function closeBookingStepsModal() {
         const modal = document.getElementById('booking-steps-modal');
-        const iframe = document.getElementById('booking-steps-iframe');
+        document.getElementById('booking-steps-pages').innerHTML = '';
         modal.classList.add('hidden');
-        iframe.src = '';
         document.body.style.overflow = '';
     }
 
