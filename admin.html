@@ -89,8 +89,6 @@
     <div id="admin-protected" class="hidden">
     <nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-2">
-            <img src="logo.JPG" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-yellow-500/50 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]">
             <span class="text-xl font-bold gold-gradient-text">🌙 ระบบหลังบ้าน (Admin) ✦</span>
             <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">กลับไปหน้าจองคิว 🌙</a>
         </div>
@@ -146,6 +144,8 @@
                             <th class="p-4">แพ็กเกจ</th>
                             <th class="p-4">ราคา</th>
                             <th class="p-4">ชื่อลูกค้า</th>
+                            <th class="p-4">อายุ</th>
+                            <th class="p-4">สถานะ</th>
                                     <th class="p-4">หมายเหตุ</th>
                             <th class="p-4 text-center">จัดการ</th>
                         </tr>
@@ -330,7 +330,7 @@
             const tbody = document.getElementById('booking-list');
             tbody.innerHTML = '';
             if (bookings.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-500">ยังไม่มีคิวจองในระบบ</td></tr>`;
                 return;
             }
             bookings.forEach(b => {
@@ -340,6 +340,8 @@
                         <td class="p-4">${b.master}</td>
                         <td class="p-4 font-semibold text-yellow-400">${b.total_price != null ? Number(b.total_price).toLocaleString('th-TH') + ' บาท' : '-'}</td>
                         <td class="p-4">${b.client_name}</td>
+                        <td class="p-4">${b.client_age != null ? b.client_age : '-'}</td>
+                        <td class="p-4">${b.client_status || '-'}</td>
                         <td class="p-4 text-slate-400">${b.note}</td>
                         <td class="p-4 text-center">
                             <button onclick="deleteBooking(${b.id})" class="px-3 py-1 bg-red-950 text-red-400 border border-red-600/40 rounded-lg text-xs">ลบ</button>
