@@ -185,7 +185,7 @@
     </script>
 
     <script>
-    
+
     const SUPABASE_URL = 'https://yttxybfektembafzxbdq.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0dHh5YmZla3RlbWJhZnp4YmRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1MDAzOTEsImV4cCI6MjEwNDA3NjM5MX0.51nc6Rd02p5pwPvQyTRDDnC1I0wOaQa9uMp7JKkaVMk';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -193,6 +193,14 @@
 
         let settings = {};
         let bookings = [];
+
+        // ป้องกัน XSS: escape ค่าที่มาจากลูกค้า (client_name, master, note ฯลฯ) ก่อนใส่ลง innerHTML
+        function escapeHtml(value) {
+            if (value === null || value === undefined || value === '') return '-';
+            return String(value).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             fetchAdminData();
@@ -219,13 +227,15 @@
                 shopBtn.innerHTML = "ปิด";
             }
 
+            // แก้ไข: เดิมข้อความสลับกับสถานะจริง (true แสดง "ปิด", false แสดง "เปิด")
+            // ตอนนี้ให้แสดงสถานะปัจจุบันให้ตรงกับปุ่มเปิด/ปิดร้านด้านบน
             const phoneBtn = document.getElementById('phone-status-btn');
             if (settings.is_phone_allowed) {
                 phoneBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white";
-                phoneBtn.innerHTML = "คำถามแบบโทร ปิด";
+                phoneBtn.innerHTML = "คำถามแบบโทร เปิด";
             } else {
                 phoneBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white";
-                phoneBtn.innerHTML = "คำถามแบบโทร เปิด";
+                phoneBtn.innerHTML = "คำถามแบบโทร ปิด";
             }
 
             renderSlotsConfig();
@@ -297,7 +307,7 @@
             (settings.time_slots_config || []).forEach((slot, index) => {
                 container.innerHTML += `
                     <div class="flex items-center justify-between p-3 bg-[#1a0b2e] border border-yellow-600/30 rounded-xl text-xs">
-                        <span>${slot.time}</span>
+                        <span>${escapeHtml(slot.time)}</span>
                         <div class="flex gap-2">
                             <button onclick="toggleSlot(${index})" class="px-2 py-1 rounded ${slot.isOpen !== false ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">${slot.isOpen !== false ? 'เปิด' : 'ปิด'}</button>
                             <button onclick="deleteSlot(${index})" class="px-2 py-1 bg-red-950 text-red-400 rounded">ลบ</button>
@@ -318,7 +328,7 @@
             disabled.forEach(d => {
                 container.innerHTML += `
                     <div class="flex items-center gap-2 bg-red-950 border border-red-600/40 px-3 py-1 rounded-xl text-xs text-red-200">
-                        <span>🚫 ${d}</span>
+                        <span>🚫 ${escapeHtml(d)}</span>
                         <button onclick="removeDisabledDate('${d}')" class="font-bold text-white hover:text-red-400">×</button>
                     </div>
                 `;
@@ -335,13 +345,13 @@
             bookings.forEach(b => {
                 tbody.innerHTML += `
                     <tr class="hover:bg-yellow-950/10">
-                        <td class="p-4">${b.booking_date}<br><span class="text-xs text-yellow-300">${b.booking_time}</span></td>
-                        <td class="p-4">${b.master}</td>
+                        <td class="p-4">${escapeHtml(b.booking_date)}<br><span class="text-xs text-yellow-300">${escapeHtml(b.booking_time)}</span></td>
+                        <td class="p-4">${escapeHtml(b.master)}</td>
                         <td class="p-4 font-semibold text-yellow-400">${b.total_price != null ? Number(b.total_price).toLocaleString('th-TH') + ' บาท' : '-'}</td>
-                        <td class="p-4">${b.client_name}</td>
+                        <td class="p-4">${escapeHtml(b.client_name)}</td>
                         <td class="p-4">${b.client_age != null ? b.client_age : '-'}</td>
-                        <td class="p-4">${b.client_status || '-'}</td>
-                        <td class="p-4 text-slate-400">${b.note}</td>
+                        <td class="p-4">${escapeHtml(b.client_status)}</td>
+                        <td class="p-4 text-slate-400">${escapeHtml(b.note)}</td>
                         <td class="p-4 text-center">
                             <button onclick="deleteBooking(${b.id})" class="px-3 py-1 bg-red-950 text-red-400 border border-red-600/40 rounded-lg text-xs">ลบ</button>
                         </td>
@@ -366,4 +376,3 @@
     </script>
 </body>
     </html>
-    
