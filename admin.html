@@ -89,8 +89,8 @@
     <div id="admin-protected" class="hidden">
     <nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <span class="text-xl font-bold gold-gradient-text">🌙 ระบบหลังบ้าน (Admin) ✦</span>
-            <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">กลับไปหน้าจองคิว 🌙</a>
+            <span class="text-xl font-bold gold-gradient-text">🌙ระบบหลังบ้าน</span>
+            <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">หน้าหลัก</a>
         </div>
     </nav>
 
@@ -98,8 +98,7 @@
         <section class="bg-[#120521] p-6 rounded-2xl border border-yellow-600/30 space-y-6 shadow-xl">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 class="text-xl font-bold gold-text">จัดการคิวและตั้งค่าระบบ</h1>
-                    <p class="text-slate-400 text-sm">ควบคุมผ่าน Supabase แบบ Real-time</p>
+                    <h1 class="text-xl font-bold gold-text">จัดการคิว</h1>
                 </div>
                 <div class="flex items-center gap-3 flex-wrap">
                     <button id="shop-status-btn" onclick="toggleShopStatus()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
@@ -121,15 +120,15 @@
             </div>
 
             <div>
-                <label class="block text-sm font-semibold gold-text mb-2">⏰ จัดการช่วงเวลาเปิด/ปิด</label>
+                <label class="block text-sm font-semibold gold-text mb-2">จัดการช่วงเวลาเปิด/ปิด</label>
                 <div id="slots-config-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
             </div>
 
             <div class="pt-4 border-t border-yellow-600/20 space-y-2">
-                <label class="block text-sm font-semibold gold-text">📅 ปิดรับจองรายวัน (เลือกเพิ่มได้หลายวัน)</label>
+                <label class="block text-sm font-semibold gold-text">ปิดรับจองรายวัน</label>
                 <div class="flex gap-2">
                     <input type="date" id="block-date-input" class="bg-[#1a0b2e] border border-yellow-600/30 rounded-xl px-3 py-2 text-xs text-white">
-                    <button onclick="addDisabledDate()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition">เพิ่มวันหยุดนี้</button>
+                    <button onclick="addDisabledDate()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition">เพิ่มวันหยุด</button>
                 </div>
                 <div id="disabled-dates-container" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
@@ -214,19 +213,19 @@
             const shopBtn = document.getElementById('shop-status-btn');
             if (settings.is_shop_open) {
                 shopBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white";
-                shopBtn.innerHTML = "🟢 ร้านเปิดอยู่ (คลิกปิด)";
+                shopBtn.innerHTML = "เปิด";
             } else {
                 shopBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white";
-                shopBtn.innerHTML = "🔴 ร้านปิดอยู่ (คลิกเปิด)";
+                shopBtn.innerHTML = "ปิด";
             }
 
             const phoneBtn = document.getElementById('phone-status-btn');
             if (settings.is_phone_allowed) {
                 phoneBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white";
-                phoneBtn.innerHTML = "📞 เปิดรับคำถามแบบโทร (คลิกปิด)";
+                phoneBtn.innerHTML = "คำถามแบบโทร ปิด";
             } else {
                 phoneBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white";
-                phoneBtn.innerHTML = "📵 ปิดรับคำถามแบบโทร (คลิกเปิด)";
+                phoneBtn.innerHTML = "คำถามแบบโทร เปิด";
             }
 
             renderSlotsConfig();
