@@ -72,9 +72,8 @@
 <body class="theme-bg text-slate-100 min-h-screen flex items-center justify-center p-4">
 
     <div class="max-w-md w-full mystic-card p-6 md:p-8 shadow-2xl space-y-6 text-center relative">
-        <div class="text-2xl">🌙 ✦ ☉ ✦ 🌙</div>
         <h1 class="text-2xl font-bold gold-gradient-text">จองคิวสำเร็จเรียบร้อย!</h1>
-        <div class="mystic-divider">✦</div>
+        <div class="mystic-divider">✦☉</div>
         <p class="text-xs text-slate-300">กรุณาตรวจสอบข้อมูลและสแกน QR Code ด้านล่างเพื่อชำระเงินค่าบริการ</p>
         
         <div id="summary-details" class="bg-[#120521] border border-yellow-600/30 p-4 rounded-xl text-left text-xs space-y-2 text-slate-200">
@@ -118,19 +117,17 @@
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
-            const queue = params.get('queue') || '-';
             const master = params.get('master') || '-';
             const date = params.get('date') || '-';
             const time = params.get('time') || '-';
             const name = params.get('name') || '-';
-            const phone = params.get('phone') || '-';
-            const ig = params.get('ig') || '-';
+            const age = params.get('age') || '-';
+            const status = params.get('status') || '-';
             const note = params.get('note') || '-';
             const total = params.get('total') || '0';
 
             document.getElementById('summary-details').innerHTML = `
-                <p><strong>เลขคิว:</strong> <span class="text-yellow-400 font-bold">${queue}</span></p>
-                <p><strong>ชื่อคุณ:</strong> ${name}</p>
+                <p><strong>ชื่อคุณ:</strong> ${name} <span class="text-slate-400">(อายุ ${age} ปี, ${status})</span></p>
                 <p><strong>รายการ:</strong> ${master}</p>
                 <p><strong>วันที่:</strong> ${date} | <strong>เวลา:</strong> ${time}</p>
                 <p><strong>หมายเหตุ:</strong> ${note}</p>
