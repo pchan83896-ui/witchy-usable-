@@ -88,27 +88,19 @@
 
     <div id="admin-protected" class="hidden">
     <nav class="bg-[#120521]/90 border-b border-yellow-600/30 sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <span class="text-xl font-bold gold-gradient-text">🌙ระบบหลังบ้าน</span>
-            <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">หน้าหลัก</a>
+            <div class="flex items-center gap-3 flex-wrap">
+                <button id="shop-status-btn" onclick="toggleShopStatus()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
+                <button id="phone-status-btn" onclick="togglePhoneAllowed()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
+                <button onclick="clearBookings()" class="px-4 py-2.5 bg-red-950/40 text-red-400 border border-red-600/40 rounded-xl text-sm">ล้างคิวทั้งหมด</button>
+                <a href="index.html" class="px-4 py-2 rounded-xl gold-button text-sm">หน้าหลัก</a>
+            </div>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-10 space-y-6">
         <section class="bg-[#120521] p-6 rounded-2xl border border-yellow-600/30 space-y-6 shadow-xl">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <h1 class="text-xl font-bold gold-text">จัดการคิว</h1>
-                </div>
-                <div class="flex items-center gap-3 flex-wrap">
-                    <button id="shop-status-btn" onclick="toggleShopStatus()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
-                    <button id="phone-status-btn" onclick="togglePhoneAllowed()" class="px-5 py-2.5 rounded-xl font-bold text-sm shadow-md"></button>
-                    <button onclick="clearBookings()" class="px-4 py-2.5 bg-red-950/40 text-red-400 border border-red-600/40 rounded-xl text-sm">ล้างคิวทั้งหมด</button>
-                </div>
-            </div>
-
-            <hr class="border-yellow-600/20">
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold gold-text mb-2">➕ เพิ่มรอบเวลาใหม่</label>
