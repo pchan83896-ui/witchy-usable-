@@ -204,7 +204,7 @@
 
         async function fetchAdminData() {
             const { data: settingsData } = await supabaseClient.from('settings').select('*').eq('id', 1).single();
-            const { data: bookingsData } = await supabaseClient.from('bookings').select('*').order('id', { ascending: true });
+            const { data: bookingsData } = await supabaseClient.from('bookings').select('*').order('booking_date', { ascending: true }).order('booking_time', { ascending: true });
             settings = settingsData || {};
             bookings = bookingsData || [];
             updateAdminUI();
@@ -366,4 +366,5 @@
         }
     </script>
 </body>
-</html>
+    </html>
+    
