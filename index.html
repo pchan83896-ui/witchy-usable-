@@ -23,6 +23,13 @@
             width: 100%;
             max-width: 100%;
         }
+        /* แก้ปัญหาช่องวันที่/เวลา "ยืดเบ่ง" เต็มจอ เมื่อเปิดผ่าน in-app browser
+           ของ Messenger/Instagram บน iPhone-iPad: สาเหตุคือ iOS จะซูมหน้าเว็บอัตโนมัติ
+           ทันทีที่แตะ input/select ที่มีขนาดตัวอักษรต่ำกว่า 16px
+           การบังคับ font-size ให้ >= 16px จะป้องกันการซูมอัตโนมัตินี้ */
+        #book-date, #book-time, #client-note {
+            font-size: 16px !important;
+        }
         .theme-bg {
             background-color: #1a0b2e;
             background-image: radial-gradient(circle at 50% 20%, #2e1046 0%, #1a0b2e 70%, #0d041a 100%);
