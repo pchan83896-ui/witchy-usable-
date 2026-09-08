@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Witchyu - จองคิวดูดวง</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -23,11 +23,11 @@
             width: 100%;
             max-width: 100%;
         }
-        /* แก้ปัญหาช่องวันที่/เวลา "ยืดเบ่ง" เต็มจอ เมื่อเปิดผ่าน in-app browser
+        /* แก้ปัญหาหน้าเว็บ "ซูมค้าง/มีภาพซ้อน" เมื่อเปิดผ่าน in-app browser
            ของ Messenger/Instagram บน iPhone-iPad: สาเหตุคือ iOS จะซูมหน้าเว็บอัตโนมัติ
-           ทันทีที่แตะ input/select ที่มีขนาดตัวอักษรต่ำกว่า 16px
-           การบังคับ font-size ให้ >= 16px จะป้องกันการซูมอัตโนมัตินี้ */
-        #book-date, #book-time, #client-note {
+           ทันทีที่แตะ input/select/textarea ตัวใดก็ตามที่มีขนาดตัวอักษรต่ำกว่า 16px
+           (ครอบคลุมทุกช่องในฟอร์ม ไม่ใช่แค่ช่องวันที่/เวลา) */
+        input, select, textarea {
             font-size: 16px !important;
         }
         .theme-bg {
