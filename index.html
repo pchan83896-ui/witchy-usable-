@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Witchyu - จองคิวดูดวง</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
@@ -27,6 +27,13 @@
             box-sizing: border-box;
             width: 100%;
             max-width: 100%;
+        }
+        /* แก้ปัญหาหน้าเว็บ "ซูมค้าง/มีภาพซ้อน" เมื่อเปิดผ่าน in-app browser
+           ของ Messenger/Instagram บน iPhone-iPad: สาเหตุคือ iOS จะซูมหน้าเว็บอัตโนมัติ
+           ทันทีที่แตะ input/select/textarea ตัวใดก็ตามที่มีขนาดตัวอักษรต่ำกว่า 16px
+           (ครอบคลุมทุกช่องในฟอร์ม ไม่ใช่แค่ช่องวันที่/เวลา) */
+        input, select, textarea {
+            font-size: 16px !important;
         }
         .theme-bg {
             background-color: #1a0b2e;
