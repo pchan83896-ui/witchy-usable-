@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" class="no-pinch-zoom">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -20,7 +20,11 @@
     <style>
         html, body { overflow-x: hidden; max-width: 100%; }
         body { font-family: 'Prompt', sans-serif; }
-        /* แก้ปัญหาช่องกรอกวันที่แสดงผลเยื้อง/ล้นขอบจอบน iPhone และ iPad (Safari) */
+        /* ปิดการซูมด้วยนิ้ว (pinch-zoom) บนหน้าจองคิวตามปกติ
+           แต่จะถูกปลดล็อกชั่วคราวเมื่อเปิดป็อปอัพ "ขั้นตอนแบบละเอียด" (ดู openBookingStepsModal / closeBookingStepsModal) */
+        html.no-pinch-zoom {
+            touch-action: pan-x pan-y;
+        }
         #book-date {
             -webkit-appearance: none;
             appearance: none;
@@ -1193,6 +1197,7 @@
         const modal = document.getElementById('booking-steps-modal');
         const pagesContainer = document.getElementById('booking-steps-pages');
         modal.classList.remove('hidden');
+        document.documentElement.classList.remove('no-pinch-zoom'); // ปลดล็อกซูมนิ้วเฉพาะตอนเปิดป็อปอัพนี้
         document.body.style.overflow = 'hidden';
         pagesContainer.innerHTML = '<p class="text-center text-yellow-300 text-sm py-10">กำลังโหลดไฟล์...</p>';
 
@@ -1235,6 +1240,7 @@
         const modal = document.getElementById('booking-steps-modal');
         document.getElementById('booking-steps-pages').innerHTML = '';
         modal.classList.add('hidden');
+        document.documentElement.classList.add('no-pinch-zoom'); // ล็อกซูมนิ้วกลับเมื่อปิดป็อปอัพ
         document.body.style.overflow = '';
     }
 
