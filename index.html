@@ -42,18 +42,11 @@
         .theme-bg {
             background-color: #1a0b2e;
             /* เลเยอร์สีทึบแสงพาดทับรูปพื้นหลัง ลดความชัดของรูปลง ไม่ให้ background เด่นเกิน */
-            background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.jpg');
+            background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.PNG');
             background-repeat: no-repeat;
             background-position: top center;
-            background-size: cover;
-        }
-        /* จอกว้าง (แท็บเล็ตแนวนอน/เดสก์ท็อป): ใช้ contain แทน cover เฉพาะเลเยอร์รูป
-           เพื่อไม่ให้รูปแนวตั้งถูกครอบตัดซ้าย-ขวาจนลายขอบหาย ส่วนเลเยอร์สีทึบแสงยังคง cover เต็มจอ
-           สีพื้น #1a0b2e ที่ล้อมรอบใกล้เคียงสีขอบภาพ ทำให้ดูกลมกลืน */
-        @media (min-width: 900px) {
-            .theme-bg {
-                background-size: cover, contain;
-            }
+            /* เลเยอร์สีทึบแสง = cover (เต็มจอเสมอ), เลเยอร์รูป = contain (เห็นรูปเต็มภาพทุกจอ ไม่ตัดทอน) */
+            background-size: cover, contain;
         }
         .gold-text { color: #fde047; }
         .gold-gradient-text {
