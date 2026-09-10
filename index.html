@@ -138,6 +138,41 @@
             fill: #fde047 !important;
         }
 
+        /* โฟกัสช่องกรอกข้อมูลเป็นสีทองเรืองแสง แทนกรอบฟ้าเริ่มต้นของเบราว์เซอร์ ให้เข้ากับธีม */
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: #eab308 !important;
+            box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.25) !important;
+        }
+
+        /* สกรอลบาร์สีทอง-ม่วง (รองรับ Chrome/Safari) */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #120521; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #ca8a04, #eab308);
+            border-radius: 10px;
+            border: 2px solid #120521;
+        }
+
+        /* ปุ่มทองเรืองแสงนุ่มๆ เวลาแตะ/โฮเวอร์ */
+        .gold-button {
+            transition: box-shadow 0.25s ease, transform 0.15s ease;
+        }
+        .gold-button:hover, .gold-button:active {
+            box-shadow: 0 0 18px rgba(234, 179, 8, 0.55);
+        }
+
+        /* การ์ดในธีม (mystic-card) เรืองแสงจางๆ เมื่อโฮเวอร์ ให้ความรู้สึกลึกลับมีชีวิต */
+        .mystic-card, .booking-card, #total-price-box {
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* ดาวกระพริบเบาๆ ตรงตัวสัญลักษณ์ ✦ ที่คั่นหัวข้อ */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
         /* ===== ตกแต่งธีมเวทมนตร์ อ้างอิงจากภาพพระจันทร์-ดวงดาวสีทองบนพื้นม่วง ===== */
         .mystic-divider {
             display: flex;
@@ -148,6 +183,9 @@
             font-size: 0.9rem;
             letter-spacing: 0.3em;
             margin: 0.25rem 0;
+        }
+        .mystic-divider {
+            animation: twinkle 2.4s ease-in-out infinite;
         }
         .mystic-divider::before, .mystic-divider::after {
             content: '';
