@@ -41,11 +41,20 @@
         }
         .theme-bg {
             background-color: #1a0b2e;
-            /* เลเยอร์สีทึบแสงพาดทับรูปพื้นหลัง ลดความชัดของรูปลง ไม่ให้ background เด่นเกิน */
-            background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.PNG');
+        }
+        /* เลเยอร์พื้นหลังแบบ fixed ไม่เลื่อนตามการสไลด์นิ้วขึ้น-ลง
+           ใช้ position:fixed แทน background-attachment:fixed เพราะ background-attachment:fixed
+           ทำงานไม่แน่นอนบน iOS Safari/in-app browser (Messenger, Instagram) */
+        .bg-fixed-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background-color: #1a0b2e;
+            background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.svg');
             background-repeat: no-repeat;
             background-position: top center;
-            /* เลเยอร์สีทึบแสง = cover (เต็มจอเสมอ), เลเยอร์รูป = contain (เห็นรูปเต็มภาพทุกจอ ไม่ตัดทอน) */
+            /* เลเยอร์สีทึบแสง = cover (เต็มจอเสมอ), เลเยอร์รูป = contain (เห็นรูปเต็มภาพทุกจอ ไม่ตัดทอน ปรับยืดหยุ่นตามขนาดจอ) */
             background-size: cover, contain;
         }
         .gold-text { color: #fde047; }
@@ -168,6 +177,7 @@
     </style>
 </head>
 <body class="theme-bg text-slate-100 min-h-screen">
+<div class="bg-fixed-layer" aria-hidden="true"></div>
 
 <!-- แก้ไขตรงนี้: เพิ่มคลาส fixed และ w-full เพื่อตรึงให้อยู่ติดด้านบนสุดตลอดเวลา -->
     <nav class="bg-[#120521]/90 border-b border-yellow-600/30 fixed top-0 left-0 w-full z-50 backdrop-blur-md">
