@@ -18,6 +18,7 @@
     <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
+        html, body { overflow-x: hidden; max-width: 100%; }
         body { font-family: 'Prompt', sans-serif; }
         /* ปิดการซูมด้วยนิ้ว (pinch-zoom) บนหน้าจองคิวตามปกติ
            แต่จะถูกปลดล็อกชั่วคราวเมื่อเปิดป็อปอัพ "ขั้นตอนแบบละเอียด" (ดู openBookingStepsModal / closeBookingStepsModal) */
@@ -40,22 +41,10 @@
         }
         .theme-bg {
             background-color: #1a0b2e;
-        }
-        /* เลเยอร์พื้นหลังแบบ fixed ไม่เลื่อนตามการสไลด์นิ้วขึ้น-ลง
-           ใช้ position:fixed แทน background-attachment:fixed เพราะ background-attachment:fixed
-           ทำงานไม่แน่นอนบน iOS Safari/in-app browser (Messenger, Instagram) */
-        .bg-fixed-layer {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-            background-color: #1a0b2e;
-            background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.svg');
+            background-image: url('bg-mystic.jpg');
+            background-size: cover;
+            background-position: top center;
             background-repeat: no-repeat;
-            background-position: center center;
-            /* เลเยอร์พื้นหลัง fixed มีขนาดเท่า viewport เป๊ะเสมอ (ไม่ใช่เท่าความสูงทั้งหน้า)
-               ใช้ cover ทั้งสองเลเยอร์ = เต็มจอพอดีทุกขนาดสกรีน ทุกสัดส่วน ปรับยืดหยุ่นอัตโนมัติ */
-            background-size: cover, cover;
         }
         .gold-text { color: #fde047; }
         .gold-gradient-text {
@@ -177,7 +166,6 @@
     </style>
 </head>
 <body class="theme-bg text-slate-100 min-h-screen">
-<div class="bg-fixed-layer" aria-hidden="true"></div>
 
 <!-- แก้ไขตรงนี้: เพิ่มคลาส fixed และ w-full เพื่อตรึงให้อยู่ติดด้านบนสุดตลอดเวลา -->
     <nav class="bg-[#120521]/90 border-b border-yellow-600/30 fixed top-0 left-0 w-full z-50 backdrop-blur-md">
