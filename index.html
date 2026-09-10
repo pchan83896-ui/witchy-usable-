@@ -53,9 +53,10 @@
             background-color: #1a0b2e;
             background-image: linear-gradient(rgba(13, 4, 26, 0.72), rgba(13, 4, 26, 0.72)), url('bg-mystic.svg');
             background-repeat: no-repeat;
-            background-position: top center;
-            /* เลเยอร์สีทึบแสง = cover (เต็มจอเสมอ), เลเยอร์รูป = contain (เห็นรูปเต็มภาพทุกจอ ไม่ตัดทอน ปรับยืดหยุ่นตามขนาดจอ) */
-            background-size: cover, contain;
+            background-position: center center;
+            /* เลเยอร์พื้นหลัง fixed มีขนาดเท่า viewport เป๊ะเสมอ (ไม่ใช่เท่าความสูงทั้งหน้า)
+               ใช้ cover ทั้งสองเลเยอร์ = เต็มจอพอดีทุกขนาดสกรีน ทุกสัดส่วน ปรับยืดหยุ่นอัตโนมัติ */
+            background-size: cover, cover;
         }
         .gold-text { color: #fde047; }
         .gold-gradient-text {
